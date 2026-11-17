@@ -1,0 +1,1758 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Porch Partner, a design by Ofer</title>
+<meta name="description" content="A design for a service that finds a licensed agent to host an open house when the listing agent can’t make it. Five demo screens to try, and the decisions behind them.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314312D'/%3E%3Cpath d='M7 16 16 8l9 8M10 14.5V24h12v-9.5' fill='none' stroke='%23F6BD41' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400..900;1,400..900&family=Libre+Franklin:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --ink:#14312D;        /* Charleston green: shutters and doors */
+  --ink-2:#3B5450;
+  --ink-3:#5C716D;
+  --paper:#FBFCFA;      /* trim white */
+  --haint:#CFE6E0;      /* haint blue: a Carolina porch ceiling */
+  --haint-lt:#E8F3F0;
+  --haint-dk:#9CCBC1;
+  --light:#F6BD41;      /* porch light: a raised hand, a pick */
+  --light-lt:#FDF0CC;
+  --brick:#B03A2A;      /* porch steps: something needs you */
+  --brick-lt:#F9E5E0;
+  --ok:#1C7C54;
+  --ok-lt:#DDF1E6;
+  --line:#D3E2DE;
+  --serif:"Besley","Rockwell","Roboto Slab",Georgia,serif;
+  --sans:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif;
+}
+
+/* ---------- base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+[hidden]{display:none!important}
+a{color:inherit;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2.5px}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-radius:6px}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.sec{padding:clamp(56px,8vw,104px) 0;scroll-margin-top:56px}
+.sec--rule{border-top:1px solid var(--line)}
+h2{font:600 clamp(1.85rem,3.4vw,2.7rem)/1.1 var(--serif);letter-spacing:-.012em;max-width:22ch;margin-bottom:.55em}
+h3{font:600 1.25rem/1.25 var(--serif)}
+.prose{max-width:62ch}
+.prose p + p{margin-top:1em}
+.fine{font-size:.9rem;color:var(--ink-2)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:0;z-index:30;background:rgba(251,252,250,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:20px;height:56px}
+.brand{font:600 1.05rem/1 var(--serif);text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:9px}
+.brand svg{flex:none}
+.nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{padding:7px 10px;border-radius:8px;font-size:.875rem;font-weight:500;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--haint-lt)}
+.nav a[aria-current="true"]{background:var(--ink);color:#fff}
+
+/* ---------- hero ---------- */
+.hero{background:var(--haint);padding:clamp(48px,7vw,96px) 0 clamp(56px,8vw,104px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(32px,6vw,88px);align-items:center}
+h1{font:600 clamp(2.45rem,5.3vw,4.35rem)/1.03 var(--serif);letter-spacing:-.02em;max-width:13ch}
+.hero__lede{margin-top:1.5rem;font-size:1.15rem;line-height:1.55;max-width:34em}
+.hero__by{margin-top:1.75rem;font-weight:600}
+.hero__note{margin-top:.35rem;font-size:.9rem;color:var(--ink-2);max-width:34em}
+
+.hero__art{display:grid;gap:18px}
+.hero__art figcaption{font-size:.875rem;font-weight:600;margin-bottom:8px}
+.chat{background:#fff;border-radius:6px 20px 20px 20px;padding:16px 18px 12px;font-size:.95rem;line-height:1.45}
+.chat__msg{display:flex;gap:11px}
+.chat__msg + .chat__msg{margin-top:12px}
+.chat__meta{font-size:.8rem;color:var(--ink-3)}
+.chat__meta b{font-size:.9rem;color:var(--ink);margin-right:6px}
+.chat__end{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font:italic 400 .9rem/1.3 var(--serif);color:var(--ink-3)}
+.now{margin-left:clamp(0px,5vw,56px)}
+
+/* ---------- shared: avatar, chips, request card ---------- */
+.av{flex:none;display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--haint-dk);font:700 12px/1 var(--sans);letter-spacing:.02em;color:var(--ink)}
+.av--dana{background:var(--ink);color:#fff}
+.av--alex{background:#F8DC97}
+.av--tom{background:#EBCFC8}
+.av--plain{background:#E1ECE9}
+.av--lg{width:42px;height:42px;font-size:14px}
+.chip{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font:600 13px/1.3 var(--sans);white-space:nowrap}
+.chip--leads{background:var(--haint);color:var(--ink)}
+.chip--fee{background:var(--light-lt);color:#553A00}
+.chip--none{box-shadow:inset 0 0 0 1px #BFD0CC;color:var(--ink-2);font-weight:500}
+.chip--own{background:var(--ink);color:#fff;font-size:11.5px;padding:3px 8px}
+
+.req{background:#fff;border-radius:16px;padding:14px 16px;font:400 14px/1.4 var(--sans)}
+.req__top{display:flex;justify-content:space-between;gap:10px;font-weight:600;font-size:13px;color:var(--ink-2)}
+.req__addr{font:600 19px/1.2 var(--serif);margin-top:3px}
+.req__by{color:var(--ink-2);margin-top:2px;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.req__offer{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.req__last{margin-top:8px;font-size:13px;color:var(--ink-2)}
+.req__hands{display:flex;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:14px}
+.req__hands .av{width:30px;height:30px;font-size:11px;box-shadow:0 0 0 2px #fff}
+.req__hands .av + .av{margin-left:-13px}
+.req__hands{gap:9px}
+.req--hero{box-shadow:0 26px 40px -28px rgba(20,49,45,.55)}
+
+/* ---------- who it's for ---------- */
+.who{display:grid;grid-template-columns:1fr 1fr;margin-top:40px;border-top:1.5px solid var(--ink)}
+.who__p{padding:28px 48px 0 0}
+.who__p + .who__p{padding:28px 0 0 48px;border-left:1px solid var(--line)}
+.who__p h3{font-size:1.5rem;margin:10px 0 10px}
+.who__p ul{margin-top:14px;display:grid;gap:6px}
+.who__p li{padding-left:22px;position:relative}
+.who__p li::before{content:"";position:absolute;left:2px;top:.62em;width:10px;height:2px;background:var(--ink)}
+.role{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600}
+.role i{width:12px;height:12px;border-radius:50%;background:var(--light);box-shadow:0 0 0 1.5px var(--ink)}
+.role--cover i{background:#fff}
+
+/* ---------- decisions ---------- */
+.dec{margin-top:36px;border-top:1.5px solid var(--ink)}
+.dec__item{display:grid;grid-template-columns:200px minmax(0,1fr) 250px;gap:8px 40px;padding:28px 0;border-bottom:1px solid var(--line)}
+.dec__q{display:flex;gap:14px;align-items:baseline;font-weight:600;color:var(--ink-2)}
+.dec__n{font:600 2.4rem/1 var(--serif);color:var(--ink)}
+.dec__a h3{margin-bottom:8px}
+.dec__a p{max-width:58ch}
+.dec__side{font-size:.9rem;color:var(--ink-2)}
+.dec__side b{color:var(--ink)}
+.dec__side p + p{margin-top:10px}
+
+/* ---------- mvp ---------- */
+.mvp{display:grid;grid-template-columns:1fr 1fr;gap:0 64px;margin-top:36px}
+.mvp h3{padding-bottom:12px;border-bottom:1.5px solid var(--ink)}
+.mvp li{padding:11px 0 11px 30px;border-bottom:1px solid var(--line);position:relative}
+.mvp li span{display:block;font-size:.9rem;color:var(--ink-2)}
+.mvp__in li::before{content:"";position:absolute;left:3px;top:1.15em;width:12px;height:7px;border-left:2.5px solid var(--ok);border-bottom:2.5px solid var(--ok);transform:rotate(-45deg)}
+.mvp__out li::before{content:"";position:absolute;left:3px;top:1.45em;width:12px;height:2.5px;background:var(--ink-3)}
+
+/* ---------- screens: layout ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:14px 32px;margin-top:28px;font-size:.9rem;align-items:center}
+.legend__sim{border:1.5px dashed rgba(20,49,45,.6);border-radius:10px;padding:5px 12px;font-weight:600}
+.screen .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,452px);gap:clamp(32px,6vw,96px);align-items:start}
+.screen__text{position:sticky;top:88px;max-width:36em}
+.plaque{display:inline-grid;place-items:center;position:relative;width:58px;height:58px;border-radius:9px;background:var(--ink);color:#fff;font:600 1.9rem/1 var(--serif);margin-bottom:18px}
+.plaque::before,.plaque::after{content:"";position:absolute;top:50%;width:4px;height:4px;margin-top:-2px;border-radius:50%;background:rgba(255,255,255,.45)}
+.plaque::before{left:6px}.plaque::after{right:6px}
+.screen h2{margin-bottom:.5em}
+.screen__text p + p{margin-top:.95em}
+.screen__text b{font-weight:700}
+.try{margin-top:1.4em!important;padding:2px 0 2px 16px;border-left:2px dashed rgba(20,49,45,.6);font-weight:500}
+.does{margin-top:1.1em;padding:16px 18px;background:var(--haint-lt);border-radius:14px}
+.does h4{font:600 1rem/1.3 var(--sans);margin-bottom:8px}
+.does li{padding-left:20px;position:relative;font-size:.95rem}
+.does li + li{margin-top:6px}
+.does li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;border-radius:50%;background:var(--ink)}
+
+.stage{background:var(--haint);border-radius:28px;padding:16px 20px 30px}
+.whose{display:flex;align-items:center;gap:8px;font-size:.9rem;padding:2px 4px 12px}
+.whose i{flex:none;width:12px;height:12px;border-radius:50%;background:var(--light);box-shadow:0 0 0 1.5px var(--ink)}
+.whose--cover i{background:#fff}
+.whose__when{margin-left:auto;color:var(--ink-2);font-weight:500;text-align:right}
+.sim{border:1.5px dashed rgba(20,49,45,.6);border-radius:14px;background:rgba(255,255,255,.5);padding:10px 12px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;font-size:.9rem;font-weight:600}
+.sim select{flex:1 1 140px;min-width:0;max-width:100%;appearance:none;-webkit-appearance:none;border:1.5px solid var(--ink);border-radius:10px;padding:8px 34px 8px 12px;font-weight:600;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%2314312D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center/16px;cursor:pointer}
+.sim__seg{flex:1 1 100%;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sim__btn{border:1.5px solid var(--ink);border-radius:10px;background:#fff;padding:8px 12px;font-weight:600;cursor:pointer;line-height:1.25;text-align:left}
+.sim__btn[aria-pressed="true"]{background:var(--ink);color:#fff}
+.sim__btn--go{background:var(--light);text-align:center}
+.sim__reset{margin-left:auto;border:0;background:none;padding:6px 4px;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer;color:var(--ink-2)}
+.sim__say{flex:1 1 100%;font-weight:500}
+
+/* ---------- phone ---------- */
+.phone{width:min(372px,100%);margin:0 auto;border:10px solid var(--ink);border-radius:48px;background:var(--ink);box-shadow:0 36px 48px -30px rgba(20,49,45,.65)}
+.phone__screen{height:760px;border-radius:38px;overflow:hidden;background:#F2F7F5;display:flex;flex-direction:column;font:400 15px/1.4 var(--sans);color:var(--ink);--pad:14px}
+.phone__screen:focus,section[tabindex="-1"]:focus{outline:none}
+.a-status{flex:none;display:flex;justify-content:space-between;align-items:center;height:34px;padding:8px 24px 0;font-size:13px;font-weight:600}
+.a-head{flex:none;padding:8px var(--pad) 10px}
+.a-head h3{font:600 20px/1.2 var(--serif)}
+.a-head p{margin-top:2px;font-size:13.5px;color:var(--ink-2)}
+.a-body{flex:1;min-height:0;overflow-y:auto;padding:4px var(--pad) 12px;scrollbar-width:thin;scrollbar-color:var(--haint-dk) transparent}
+.a-dock{flex:none;padding:10px var(--pad) 16px;background:#fff;border-top:1px solid var(--line)}
+.a-dock__label{font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+
+.a-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:46px;padding:10px 16px;border:0;border-radius:13px;background:var(--ink);color:#fff;font:600 15px/1.2 var(--sans);cursor:pointer;text-align:center}
+.a-btn:disabled{background:#C4D2CF;color:#fff;cursor:not-allowed}
+.a-btn--ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.a-btn--light{background:var(--light);color:var(--ink)}
+.a-btn--done{background:var(--ok-lt);color:#0F5438;cursor:default}
+.a-btn--sm{min-height:40px;border-radius:11px;font-size:14px}
+.a-btn + .a-btn{margin-top:8px}
+.a-link{border:0;background:none;padding:6px 2px;font:600 13.5px/1.2 var(--sans);color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.a-card{background:#fff;border-radius:16px;padding:14px}
+.a-card + .a-card,.a-card + .tc,.tc + .tc,.a-alert + .a-card,.a-card + .a-alert{margin-top:10px}
+.a-h{font:600 23px/1.15 var(--serif);letter-spacing:-.01em}
+.a-sub{margin-top:8px;color:var(--ink-2);font-size:14.5px}
+.a-help{margin-top:8px;font-size:13px;color:var(--ink-2)}
+.a-help--warn{color:#6B2318;background:var(--brick-lt);border-radius:9px;padding:7px 10px;font-weight:500}
+.a-help--note{color:#553A00;background:var(--light-lt);border-radius:9px;padding:7px 10px;font-weight:500}
+.a-brand{display:flex;align-items:center;gap:8px;font:600 15px/1 var(--serif);padding-top:6px}
+.a-steps{display:flex;gap:6px;margin:16px 0 6px}
+.a-steps i{flex:1;height:4px;border-radius:2px;background:#C9DAD6}
+.a-steps i.on{background:var(--ink)}
+.a-steplabel{font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:14px}
+.a-field{display:block;margin-top:14px}
+.a-field > span{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+.a-field input,.a-fixed{display:block;width:100%;height:46px;padding:0 13px;border:1.5px solid #B4C6C2;border-radius:12px;background:#fff;font-size:16px}
+.a-field input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px var(--haint)}
+.a-fixed{display:flex;align-items:center;justify-content:space-between;background:#E6EFEC;border-color:transparent;color:var(--ink-2)}
+.a-fixed small{font-size:12.5px}
+.a-err{margin-top:6px;font-size:13px;font-weight:600;color:var(--brick)}
+.spin{width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.seal{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;margin:10px 0 14px}
+.seal--ok{background:var(--ok);color:#fff}
+.seal--bad{background:var(--brick);color:#fff}
+.rec{margin-top:16px;background:#fff;border-radius:16px;padding:4px 14px 12px}
+.rec__row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.rec__row dt{color:var(--ink-2)}
+.rec__row dd{font-weight:600;text-align:right}
+.rec__src{padding-top:10px}
+.src{font:italic 400 12.5px/1.35 var(--serif);color:var(--ink-3)}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font:700 12px/1.3 var(--sans);white-space:nowrap}
+.tag--ok{background:var(--ok-lt);color:#0F5438}
+.tag--bad{background:var(--brick-lt);color:#7A2114}
+.tag--new{box-shadow:inset 0 0 0 1.5px var(--ink);color:var(--ink)}
+.tag--pick{background:var(--light);color:var(--ink)}
+.tag--backup{background:#E1ECE9;color:var(--ink)}
+
+.idtile{display:flex;align-items:center;gap:12px;margin-top:10px;background:#fff;border-radius:16px;padding:12px 14px}
+.idtile__pic{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:12px;background:var(--haint-lt);color:var(--ink-2)}
+.idtile__pic.is-done{background:var(--ok-lt);color:var(--ok)}
+.idtile__t{flex:1;min-width:0;font-size:14.5px}
+.idtile__t b{display:block}
+.idtile__t span{display:block;font-size:13px;color:var(--ink-2)}
+.idtile .a-btn{width:auto;min-height:36px;padding:8px 14px;font-size:13.5px}
+
+/* screen 2 */
+.a-listing{display:flex;align-items:center;gap:12px;padding:2px 0 0}
+.a-listing__pic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--haint);color:var(--ink)}
+.a-listing b{display:block;font-size:15.5px}
+.a-listing span{display:block;font-size:13.5px;color:var(--ink-2)}
+.a-group{margin-top:12px}
+.a-head + .a-body > .a-group:first-child{margin-top:4px}
+.a-group__label{font-size:13px;font-weight:700;margin-bottom:7px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;background:#DFEAE7;border-radius:13px}
+.seg button{border:0;border-radius:10px;min-height:42px;padding:6px 8px;background:transparent;font:600 13.5px/1.2 var(--sans);color:var(--ink-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(20,49,45,.2)}
+.a-ok{display:flex;gap:10px;align-items:flex-start;margin-top:8px;padding:8px 12px;background:var(--light-lt);border-radius:12px;font-size:13px;line-height:1.35;color:#3F2C00;cursor:pointer}
+.a-ok input{flex:none;width:20px;height:20px;margin:0;accent-color:var(--ink)}
+.a-ok b{display:block;color:var(--ink)}
+.a-row{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:11px 12px}
+.a-row__t{flex:1;min-width:0;font-size:14.5px;font-weight:600;line-height:1.3}
+.a-row__t span{display:block;margin-top:2px;font-size:12.5px;font-weight:400;color:var(--ink-2)}
+.sw{flex:none;position:relative;width:50px;height:30px;border:0;border-radius:15px;background:#AEBFBB;cursor:pointer;transition:background .15s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.28);transition:transform .15s}
+.sw[aria-checked="true"]{background:var(--ok)}
+.sw[aria-checked="true"]::after{transform:translateX(20px)}
+.a-fee{margin-top:8px;background:#fff;border-radius:14px;padding:10px 12px 10px}
+.a-fee.is-nudged{box-shadow:0 0 0 2px var(--light)}
+.a-fee__top{display:flex;justify-content:space-between;align-items:baseline;font-size:14.5px;font-weight:600}
+.a-fee__top output{font:600 20px/1 var(--serif)}
+.a-scale{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-3);margin-top:-2px}
+.rng{-webkit-appearance:none;appearance:none;display:block;width:100%;height:30px;margin:0;background:transparent;cursor:pointer;--p:0%}
+.rng:focus-visible{outline-offset:0}
+.rng::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(to right,var(--ink) var(--p),#C9DAD6 var(--p))}
+.rng::-moz-range-track{height:6px;border-radius:3px;background:#C9DAD6}
+.rng::-moz-range-progress{height:6px;border-radius:3px;background:var(--ink)}
+.rng::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;margin-top:-10px;border-radius:50%;background:#fff;border:2px solid var(--ink);box-shadow:0 2px 4px rgba(20,49,45,.25)}
+.rng::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--ink);box-shadow:0 2px 4px rgba(20,49,45,.25)}
+.req--mini{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+.req--mini .req__addr{font-size:17px;margin:0}
+.req__row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.req__row .req__addr{color:var(--ink)}
+.req--mini .req__offer{margin-top:7px}
+.req--mini .req__last{margin-top:6px;font-size:12.5px}
+
+/* screen 3 */
+.flt{flex:none;padding:0 var(--pad) 10px;border-bottom:1px solid var(--line)}
+.flt__dist{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600}
+.flt__dist output{flex:none;width:96px}
+.flt__row{display:flex;gap:8px;margin-top:4px}
+.flt select{flex:1;min-width:0;height:38px;appearance:none;-webkit-appearance:none;border:1.5px solid #B4C6C2;border-radius:11px;padding:0 30px 0 11px;font-size:14px;font-weight:600;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%2314312D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 9px center/15px;cursor:pointer}
+.flt__fee{flex:none;height:38px;padding:0 13px;border:1.5px solid #B4C6C2;border-radius:11px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px}
+.flt__fee::before{content:"";width:14px;height:14px;border-radius:4px;box-shadow:inset 0 0 0 1.5px var(--ink-3)}
+.flt__fee[aria-pressed="true"]{background:var(--light-lt);border-color:#D9A62E}
+.flt__fee[aria-pressed="true"]::before{background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-6.5' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;box-shadow:none}
+.a-count{font-size:13px;font-weight:600;color:var(--ink-2);padding:10px 2px 8px}
+.req--list + .req--list{margin-top:10px}
+.req--list .a-btn{margin-top:12px}
+.req--list.is-up{box-shadow:inset 0 0 0 2px var(--light)}
+.raised{margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--light-lt);font-size:13px;line-height:1.35;color:#3F2C00}
+.raised b{display:block;font-size:14px;color:var(--ink)}
+.raised .a-link{padding:6px 0 0;font-size:13px}
+.a-empty{text-align:left;padding:28px 6px}
+.a-empty b{display:block;font:600 18px/1.25 var(--serif);margin-bottom:6px}
+.a-empty p{font-size:14px;color:var(--ink-2);margin-bottom:14px}
+
+/* trust card */
+.tc{background:#fff;border-radius:16px;overflow:hidden}
+.tc.is-picked{box-shadow:inset 0 0 0 2px var(--light)}
+.tc__head{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;padding:13px 12px 0 14px;text-align:left;cursor:pointer}
+.tc__who{flex:1;min-width:0;line-height:1.25}
+.tc__who b{display:block;font:600 17px/1.2 var(--serif)}
+.tc__who span{display:block;font-size:13px;color:var(--ink-2);margin-top:1px}
+.tc__chev{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#EDF4F2;transition:transform .18s}
+.tc.is-open .tc__chev{transform:rotate(180deg)}
+.tc__lic{display:flex;gap:7px;align-items:flex-start;margin:10px 14px 0;font-size:13px;line-height:1.35}
+.tc__lic svg{flex:none;margin-top:1px;color:var(--ok)}
+.tc__lic b{font-weight:700}
+.tc__strip{display:grid;grid-template-columns:.8fr 1.15fr 1fr 1.15fr;margin:12px 14px 14px;border-top:1px solid var(--line);padding-top:10px}
+.tc__strip > div{display:flex;flex-direction:column-reverse;padding-right:4px}
+.tc__strip dt{font-size:12px;color:var(--ink-2);margin-top:1px}
+.tc__strip dd{font:600 18px/1.15 var(--serif);white-space:nowrap}
+.tc__new{margin:12px 14px 14px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+.tc__more{padding:0 14px 14px}
+.tc__sec{padding:11px 0;border-top:1px solid var(--line);font-size:13.5px;line-height:1.4}
+.tc__sec h4{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:700 13px/1.3 var(--sans);margin-bottom:3px}
+.tc__sec h4 .src{font-weight:400;text-align:right}
+.tc__q{font:italic 500 14.5px/1.3 var(--serif)}
+.dots{display:flex;flex-wrap:wrap;gap:4px;margin:7px 0 5px}
+.dots i{width:13px;height:13px;border-radius:50%;background:var(--ok)}
+.dots i.no{background:transparent;box-shadow:inset 0 0 0 1.5px var(--brick)}
+.tc__more .a-btn{margin-top:6px}
+.banner{background:var(--light-lt);border-radius:14px;padding:11px 13px;font-size:13.5px;line-height:1.4;margin-bottom:10px;color:#3F2C00}
+.banner b{display:block;font-size:15px;color:var(--ink)}
+.note h4{font:700 13px/1.3 var(--sans);margin-bottom:5px}
+.note p{font-size:13.5px;line-height:1.45}
+.note .src{display:block;margin-top:7px}
+
+/* after the open house */
+.tl{display:grid;gap:9px;font-size:13.5px;line-height:1.4}
+.tl li{display:grid;grid-template-columns:66px 1fr;gap:10px}
+.tl time{font-weight:700;white-space:nowrap}
+.split__bar{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin:10px 0 9px}
+.split__bar i{height:22px;border-radius:5px;background:#DFEAE7}
+.split__bar i.lead{background:var(--haint-dk);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.split b{font:600 16px/1.2 var(--serif)}
+.split p{font-size:13.5px;line-height:1.4}
+.sil{margin-top:10px;border-top:1px solid var(--line)}
+.sil li{padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.35}
+.sil__top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.sil__top b{font-size:14px}
+.sil__c{color:var(--ink-2);margin-top:2px}
+.rate{background:var(--light-lt)}
+.rate h4{font:700 13px/1.3 var(--sans);color:#553A00}
+.rate__q{font:600 19px/1.22 var(--serif);margin:5px 0 12px}
+.rate__btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rate__btns .a-btn{margin:0}
+.rate p{font-size:13px;line-height:1.4;margin-top:10px;color:#3F2C00}
+.ans{display:grid;gap:6px;margin:8px 0 2px}
+.ans div{display:flex;gap:9px;align-items:center;background:#fff;border-radius:11px;padding:8px 10px;font-size:13.5px;line-height:1.3}
+.ans .av{width:28px;height:28px;font-size:10.5px}
+
+/* screen 5 */
+.a-alert{border-radius:16px;padding:14px;font-size:14px;line-height:1.4}
+.a-alert h4{font:600 19px/1.2 var(--serif);margin-bottom:5px}
+.a-alert--urgent{background:var(--brick);color:#fff}
+.a-alert--heads{background:var(--light-lt);color:#3F2C00}
+.a-alert--heads h4{color:var(--ink)}
+.a-alert--good{background:var(--ok-lt);color:#0F3F2B}
+.a-alert--good h4{color:#0C3A27}
+.a-alert__when{display:block;font-size:12.5px;font-weight:700;margin-bottom:6px;opacity:.9}
+.a-label{font:700 13px/1.3 var(--sans);margin-bottom:9px}
+.mini{display:flex;align-items:center;gap:10px}
+.mini b{display:block;font:600 16px/1.2 var(--serif)}
+.mini div span{display:block;font-size:12.5px;color:var(--ink-2)}
+.a-card .tc__strip{margin:11px 0 0}
+.wait{display:flex;gap:9px;align-items:flex-start;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:13px;line-height:1.4}
+.wait i{flex:none;width:10px;height:10px;margin-top:4px;border-radius:50%;background:var(--light);box-shadow:0 0 0 3px var(--light-lt);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.ticks{display:grid;gap:9px;font-size:13.5px;line-height:1.4}
+.ticks li{display:grid;grid-template-columns:18px 1fr;gap:8px}
+.ticks svg{margin-top:2px;color:var(--ok)}
+.ticks li.dot::before{content:"";width:7px;height:7px;margin:6px 0 0 4px;border-radius:50%;background:var(--ink-3)}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.choice{display:block;text-align:left;border:0;border-radius:14px;background:#fff;padding:13px 13px 12px;min-height:78px;cursor:pointer;box-shadow:inset 0 0 0 1.5px var(--ink)}
+.choice b{display:block;font:600 16px/1.2 var(--serif)}
+.choice span{display:block;margin-top:3px;font-size:12.5px;line-height:1.3;color:var(--ink-2)}
+.lineup{display:grid;gap:9px}
+.lineup li{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
+.lineup .av{width:30px;height:30px;font-size:11px}
+.lineup .tag{margin-left:auto}
+.lineup li.is-out{color:var(--ink-3)}
+.lineup li.is-out b{font-weight:600;text-decoration:line-through}
+.lineup li.is-out .av{opacity:.55}
+.tag--wait{background:var(--light-lt);color:#553A00}
+.moves{display:grid;gap:8px}
+.move{background:#fff;border-radius:14px;padding:12px 13px}
+.move__top{display:flex;align-items:center;gap:10px}
+.move__t{flex:1;min-width:0;font-size:14.5px;font-weight:600;line-height:1.3}
+.move__t span{display:block;font-size:12.5px;font-weight:400;color:var(--ink-2);margin-top:1px}
+.move .a-btn{width:auto;min-height:36px;padding:8px 14px;font-size:13.5px;margin:0}
+.move__open{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.move__open .a-btn{width:100%;min-height:42px;margin-top:8px}
+.move.is-done{background:#E6EFEC}
+
+/* ---------- assumptions ---------- */
+.tally{margin-top:28px;max-width:720px}
+.tally__bar{display:grid;grid-template-columns:repeat(35,1fr);gap:3px}
+.tally__bar i{height:26px;border-radius:4px}
+.tally__bar .p{background:var(--ok)}
+.tally__bar .t{background:var(--light)}
+.tally__bar .u{box-shadow:inset 0 0 0 1.5px var(--ink-3)}
+.tally__key{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:12px;font-size:.9rem}
+.tally__key span{display:inline-flex;align-items:center;gap:8px}
+.tally__key i{width:14px;height:14px;border-radius:3px}
+.tally__key .p{background:var(--ok)}.tally__key .t{background:var(--light)}.tally__key .u{box-shadow:inset 0 0 0 1.5px var(--ink-3)}
+.sub{margin-top:56px}
+.sub > h3{font-size:1.45rem;margin-bottom:6px}
+.first{margin-top:18px;border-top:1.5px solid var(--ink)}
+.first li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 40px;padding:16px 0;border-bottom:1px solid var(--line)}
+.first li p:first-child{font-weight:600}
+.first li p:last-child{color:var(--ink-2)}
+.first__h{font-size:.9rem;font-weight:600;color:var(--ink-2)}
+.first__h p:first-child{font-weight:600!important}
+details.all{margin-top:28px;border:1.5px solid var(--ink);border-radius:16px;overflow:hidden}
+details.all summary{cursor:pointer;padding:16px 20px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+details.all summary::-webkit-details-marker{display:none}
+details.all summary::after{content:"";flex:none;width:10px;height:10px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg);margin-right:4px;transition:transform .15s}
+details.all[open] summary::after{transform:rotate(-135deg)}
+.atable{width:100%;border-collapse:collapse;font-size:.9rem;line-height:1.45}
+.atable th{text-align:left;font-weight:600;padding:10px 12px;background:var(--haint-lt);vertical-align:bottom}
+.atable td{padding:11px 12px;border-top:1px solid var(--line);vertical-align:top}
+.atable td:first-child{font-weight:600;white-space:nowrap;padding-left:20px}
+.atable th:first-child{padding-left:20px}
+.atable tr.grp td{background:var(--ink);color:#fff;font-weight:600;padding:9px 20px}
+.st{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.78rem;font-weight:700;margin-bottom:4px;white-space:nowrap}
+.st--p{background:var(--ok-lt);color:#0F5438}
+.st--t{background:var(--light-lt);color:#553A00}
+.st--u{box-shadow:inset 0 0 0 1.5px var(--ink-3);color:var(--ink-2)}
+.open li{padding:12px 0 12px 26px;border-bottom:1px solid var(--line);position:relative;max-width:68ch}
+.open li::before{content:"?";position:absolute;left:2px;top:11px;font:600 1.05rem/1.5 var(--serif)}
+.open{margin-top:14px;border-top:1.5px solid var(--ink)}
+
+.states{margin-top:28px;border-top:1.5px solid var(--ink);max-width:820px}
+.states li{display:grid;grid-template-columns:170px minmax(0,1fr);gap:6px 28px;padding:16px 0;border-bottom:1px solid var(--line)}
+.states b{font:600 1.1rem/1.3 var(--serif)}
+.states .fine{display:block;margin-top:4px}
+
+footer{background:var(--ink);color:#DCEAE6;padding:36px 0;font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 32px;justify-content:space-between}
+footer b{font:600 1.05rem/1.3 var(--serif);color:#fff}
+
+/* ---------- responsive ---------- */
+@media (max-width:1000px){
+  .dec__item{grid-template-columns:150px minmax(0,1fr)}
+  .dec__side{grid-column:2}
+}
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .hero__art{max-width:540px}
+  .screen .wrap{grid-template-columns:minmax(0,1fr)}
+  .screen__text{position:static;max-width:38em}
+  .stage{max-width:452px;width:100%;margin:0 auto}
+  .nav{margin-left:0}
+}
+@media (max-width:700px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .topbar .wrap{gap:10px;padding-right:0}
+  .brand span{display:none}
+  .nav a{padding:7px 9px}
+  .who{grid-template-columns:1fr}
+  .who__p{padding:24px 0 0}
+  .who__p + .who__p{padding:24px 0 0;border-left:0;border-top:1px solid var(--line);margin-top:24px}
+  .dec__item{grid-template-columns:1fr;gap:10px}
+  .dec__side{grid-column:1}
+  .mvp{grid-template-columns:1fr;gap:36px}
+  .first li{grid-template-columns:1fr;gap:4px}
+  .first__h{display:none!important}
+  .states li{grid-template-columns:1fr}
+  .atable,.atable tbody,.atable tr,.atable td{display:block}
+  .atable thead{display:none}
+  .atable tr{border-top:1px solid var(--line);padding:10px 0}
+  .atable tr.grp{padding:0;border:0}
+  .atable td{border:0;padding:3px 16px}
+  .atable td:first-child{padding-left:16px}
+  .atable td[data-l]::before{content:attr(data-l) " ";font-weight:600}
+}
+@media (max-width:500px){
+  .stage{border-radius:0;margin:0 -16px;width:auto;max-width:none;padding:14px 10px 26px}
+  .phone{border-width:7px;border-radius:40px}
+  .phone__screen{border-radius:33px;--pad:12px}
+  .sim__seg{grid-template-columns:1fr}
+  .now{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Porch Partner, back to top">
+      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#14312D"/><path d="M7 16 16 8l9 8M10 14.5V24h12v-9.5" fill="none" stroke="#F6BD41" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Porch Partner</span>
+    </a>
+    <nav class="nav" aria-label="On this page">
+      <a href="#who">Who it’s for</a>
+      <a href="#decisions">Decisions</a>
+      <a href="#mvp">MVP</a>
+      <a href="#screen-1">1 Sign up</a>
+      <a href="#screen-2">2 Post</a>
+      <a href="#screen-3">3 Find</a>
+      <a href="#screen-4">4 Pick and rate</a>
+      <a href="#screen-5">5 Go wrong</a>
+      <a href="#assumptions">Assumptions</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1>Someone you’ve never met is about to host your open house.</h1>
+      <p class="hero__lede">Porch Partner is for real estate agents who can’t make one of their own open houses. It finds a licensed agent nearby who can host it, gives that agent a reason to say yes, and gives the listing agent reasons to trust them. Below: who it’s for, the four decisions I made, and five screens you can try.</p>
+      <p class="hero__by">Design by Ofer, November 2026</p>
+      <p class="hero__note">The people, addresses, brokerages and numbers on this page are made up. The state rules are real, and linked at the bottom.</p>
+    </div>
+
+    <div class="hero__art">
+      <figure>
+        <figcaption>Today, in the brokerage group chat</figcaption>
+        <div class="chat">
+          <div class="chat__msg">
+            <span class="av av--dana" aria-hidden="true">DR</span>
+            <div>
+              <p class="chat__meta"><b>Dana Ruiz</b>Tue 9:12 AM</p>
+              <p>Can anyone cover my open house Saturday 1–3 at 214 Elm? I’ve got two at once.</p>
+            </div>
+          </div>
+          <div class="chat__msg">
+            <span class="av av--plain" aria-hidden="true">MB</span>
+            <div>
+              <p class="chat__meta"><b>Marcus Bell</b>Tue 11:40 AM</p>
+              <p>Sorry, showings all afternoon.</p>
+            </div>
+          </div>
+          <p class="chat__end">Seen by 13. Nothing since.</p>
+        </div>
+      </figure>
+      <figure class="now">
+        <figcaption>The same ask on Porch Partner</figcaption>
+        <div class="req req--hero">
+          <div class="req__top"><span>Sat, Nov 21, 1–3 PM</span><span>Charlotte</span></div>
+          <div class="req__addr">214 Elm St</div>
+          <div class="req__by">Dana Ruiz, Harbor Realty</div>
+          <div class="req__offer"><span class="chip chip--leads">You keep the buyer leads</span></div>
+          <div class="req__last">Last open house here: 11 groups, 4 with no agent</div>
+          <div class="req__hands">
+            <span class="av" aria-hidden="true">PS</span><span class="av av--alex" aria-hidden="true">AK</span><span class="av av--tom" aria-hidden="true">TR</span>
+            <span><b>3 hands raised</b> by Wednesday</span>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHO ================= -->
+<section class="sec" id="who">
+  <div class="wrap">
+    <h2>Two agents, and they’re mostly not the same person</h2>
+    <div class="prose">
+      <p>The agent who needs cover and the agent who’d give it have different weekends and different problems. That shaped every decision below, starting with what the covering agent gets. One industry guide backs this split; I haven’t interviewed agents yet.</p>
+    </div>
+    <div class="who">
+      <div class="who__p">
+        <span class="role"><i></i>Listing agent</span>
+        <h3>Dana Ruiz, Harbor Realty</h3>
+        <p>Dana has two open houses this weekend and can be at one. Today that means a message in the brokerage group chat and hoping one of 13 colleagues is free.</p>
+        <ul>
+          <li>An answer fast, not a chat that goes quiet.</li>
+          <li>Someone who will turn up, and who the seller would be fine with.</li>
+          <li>No favor to repay later.</li>
+        </ul>
+      </div>
+      <div class="who__p">
+        <span class="role role--cover"><i></i>Covering agent</span>
+        <h3>Priya Shah, Queen City Homes</h3>
+        <p>Priya got licensed 14 months ago, has free weekends and not enough buyers. An open house is where buyers with no agent walk in. Priya would gladly host one, and has no way to find out who needs it.</p>
+        <ul>
+          <li>To see what’s on offer before saying yes.</li>
+          <li>A way to earn the trust of listing agents who haven’t met Priya.</li>
+          <li>No awkward ask about who keeps the buyers.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DECISIONS ================= -->
+<section class="sec sec--rule" id="decisions">
+  <div class="wrap">
+    <h2>Four decisions</h2>
+    <div class="prose">
+      <p>Each one is a choice against something reasonable. The screens further down show them working.</p>
+    </div>
+    <ol class="dec">
+      <li class="dec__item">
+        <div class="dec__q"><span class="dec__n">1</span>Who may cover</div>
+        <div class="dec__a">
+          <h3>Colleagues first, outside agents where the state allows it</h3>
+          <p>A coverage request goes to the listing agent’s own brokerage. The listing agent can widen it to any verified agent nearby only where the state lets an outside agent host, and only with the seller’s signed OK. The rules really do differ: North Carolina allows it, South Carolina doesn’t.</p>
+        </div>
+        <div class="dec__side">
+          <p><b>Instead of</b> any verified agent everywhere, or the same brokerage only.</p>
+          <p><a href="#screen-2">See it on screen 2</a></p>
+        </div>
+      </li>
+      <li class="dec__item">
+        <div class="dec__q"><span class="dec__n">2</span>What the covering agent gets</div>
+        <div class="dec__a">
+          <h3>Buyer leads by default, a fee when leads aren’t enough</h3>
+          <p>The covering agent keeps the visitors who have no agent of their own. The listing agent can add a flat fee to fill a request faster, and can switch leads off only if a fee is on, so a request always offers something. A fee moves brokerage to brokerage, never agent to agent.</p>
+        </div>
+        <div class="dec__side">
+          <p><b>Instead of</b> a flat fee only, or favor credits (cover one, get one covered). Credits need the same people on both sides, and they aren’t.</p>
+          <p><a href="#screen-2">Screen 2</a> and <a href="#screen-3">screen 3</a></p>
+        </div>
+      </li>
+      <li class="dec__item">
+        <div class="dec__q"><span class="dec__n">3</span>Why trust them</div>
+        <div class="dec__a">
+          <h3>A trust card of checked facts, with one question and no stars</h3>
+          <p>The license is read from the state record every morning, not once at sign-up. Porch Partner counts the track record itself: covers, on-time check-ins, cancellations. After each open house both sides answer one yes-or-no question, and the two answers appear together.</p>
+        </div>
+        <div class="dec__side">
+          <p><b>Instead of</b> a one-time license check with five-star ratings and written reviews, or a hand-picked network.</p>
+          <p><a href="#screen-1">Screen 1</a> and <a href="#screen-4">screen 4</a></p>
+        </div>
+      </li>
+      <li class="dec__item">
+        <div class="dec__q"><span class="dec__n">4</span>How a match is made, and unmade</div>
+        <div class="dec__a">
+          <h3>Agents raise a hand, the listing agent picks, the rest are backups</h3>
+          <p>Nobody grabs a request and nobody is assigned one. The listing agent picks from trust cards. If the pick cancels, stops having an active license or doesn’t check in, a backup who already said yes is one step away.</p>
+        </div>
+        <div class="dec__side">
+          <p><b>Instead of</b> first to say yes gets it, or the service choosing the best match.</p>
+          <p><a href="#screen-4">Screen 4</a> and <a href="#screen-5">screen 5</a></p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= MVP ================= -->
+<section class="sec sec--rule" id="mvp">
+  <div class="wrap">
+    <h2>What I’d build first</h2>
+    <div class="prose">
+      <p>The brief names maps, calendars, license checks and money. I went deep on the license check and the trust around it, because that’s what makes a listing agent say yes to someone they’ve never met. The other three can wait.</p>
+    </div>
+    <div class="mvp">
+      <div class="mvp__in">
+        <h3>In</h3>
+        <ul>
+          <li>License check against the state record, for one state</li>
+          <li>Posting a coverage request, with who can see it and its offer</li>
+          <li>Finding requests nearby and raising a hand</li>
+          <li>Picking from trust cards, with backups</li>
+          <li>Check-in at the house</li>
+          <li>The sign-in list, with buyer leads split out</li>
+          <li>The rating question, both ways</li>
+          <li>Alerts for a cancellation and a no-show</li>
+        </ul>
+      </div>
+      <div class="mvp__out">
+        <h3>Out for now</h3>
+        <ul>
+          <li>Paying a fee inside the app <span>A fee is recorded, then settled brokerage to brokerage outside it.</span></li>
+          <li>A map view <span>A list sorted by distance does the job at this size.</span></li>
+          <li>Calendar sync</li>
+          <li>Rules for more states <span>Each state starts closed to outside agents until its rules are read.</span></li>
+          <li>Chat inside the app <span>The handoff note carries what the covering agent needs.</span></li>
+          <li>Seller e-signature <span>The listing agent confirms the seller’s signed OK is on file.</span></li>
+          <li>A trust card for listing agents</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCREENS INTRO ================= -->
+<section class="sec sec--rule" id="screens" style="padding-bottom:0">
+  <div class="wrap">
+    <h2>Five screens to try</h2>
+    <div class="prose">
+      <p>They follow one open house from sign-up to the rating. Everything inside a phone works: tap, drag, switch. A dashed box above a phone is me playing the outside world, like the state record, the clock or another agent.</p>
+    </div>
+    <div class="legend" aria-label="How to read the screens">
+      <span class="role"><i></i>Listing agent’s phone</span>
+      <span class="role role--cover"><i></i>Covering agent’s phone</span>
+      <span class="legend__sim">The outside world</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCREEN 1 ================= -->
+<section class="sec screen" id="screen-1">
+  <div class="wrap">
+    <div class="screen__text">
+      <span class="plaque" aria-hidden="true">1</span>
+      <h2><span class="vh">Screen 1: </span>Sign up and license check</h2>
+      <p>Tom Reyes got licensed two months ago and wants to cover open houses. Tom types a license number, Porch Partner finds it on North Carolina’s state record, and a photo ID step checks that the name on Tom’s ID is the name on the license.</p>
+      <p><b>The decision.</b> I don’t ask for a copy of the license. A copy shows what was true the day the card was issued, not today. Porch Partner reads the state record itself, every morning, from the file the Real Estate Commission updates daily and sells for $250 a year. A verified agent is one whose license is active in today’s file.</p>
+      <p><b>Why “active”, not “licensed”.</b> North Carolina licenses everyone as a broker. Tom, two months in, is a provisional broker, and his license is active only while a broker-in-charge supervises him. An inactive license is still a license, but its holder has to stop working.</p>
+      <p><b>Why the photo ID.</b> License numbers are public. Without a second check, anyone could sign up as Tom.</p>
+      <p><b>The tradeoff.</b> Sign-up is a step longer. “Checked today” means this morning’s file, so a license that lapses at noon shows tomorrow. And the photo ID only matches a name: the state record has no photo or birth date to compare, so someone who shares Tom’s name could pass. If that turns out to be a real risk, I’d send a code to the email on the Commission’s record.</p>
+      <p class="try">Try it: change what the state record says, in the dashed box.</p>
+    </div>
+    <div class="stage">
+      <div class="whose whose--cover"><i></i><span><b>Tom Reyes</b>, covering agent</span><span class="whose__when">Tue, Nov 17</span></div>
+      <div class="sim">
+        <label for="s1-out">The state record says</label>
+        <select id="s1-out">
+          <option value="active">the license is active</option>
+          <option value="inactive">the license is not active</option>
+          <option value="mismatch">the name doesn’t match</option>
+        </select>
+        <button class="sim__reset" type="button" id="s1-reset">Start over</button>
+      </div>
+      <div class="phone"><div class="phone__screen" id="s1" aria-live="polite"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCREEN 2 ================= -->
+<section class="sec sec--rule screen" id="screen-2">
+  <div class="wrap">
+    <div class="screen__text">
+      <span class="plaque" aria-hidden="true">2</span>
+      <h2><span class="vh">Screen 2: </span>Post a coverage request</h2>
+      <p>Dana needs cover at 214 Elm St on Saturday. Two choices take up the screen: who can see the request, and what it offers. The bottom of the screen shows the request the way covering agents will see it, and it changes as Dana does.</p>
+      <p><b>Who sees it.</b> The request starts inside Harbor Realty, with Dana’s 13 colleagues. Widening it to any verified agent nearby asks for one thing first: the seller’s signed OK, which North Carolina requires before an outside agent may host. In a state that doesn’t allow outside agents, the second option wouldn’t be there at all.</p>
+      <p><b>What it offers.</b> Buyer leads are on by default, because that’s what the agents who’d cover already want. The fee is for when leads won’t be enough, like a quiet street. Leads can go off only when a fee is on, so no request offers nothing. A fee goes brokerage to brokerage.</p>
+      <p><b>The tradeoff.</b> Defaulting to leads bets that a busy listing agent will give up the visitors with no agent. I haven’t tested that with agents; if I’m wrong, leads become a choice made on each request. Widening is by hand here, so a request can sit with colleagues who aren’t free. And that a fee must go through the broker is proved for South Carolina and Texas, not yet for North Carolina.</p>
+      <p class="try">Try it: widen the request. Then, with the fee at $0, try to switch buyer leads off.</p>
+    </div>
+    <div class="stage">
+      <div class="whose"><i></i><span><b>Dana Ruiz</b>, listing agent</span><span class="whose__when">Tue, Nov 17</span></div>
+      <div class="phone">
+        <div class="phone__screen" id="s2">
+          <div class="a-status"><span>4:30</span><svg width="42" height="12" viewBox="0 0 42 12" aria-hidden="true"><path d="M1 9h2v2H1zM5 7h2v4H5zM9 4h2v7H9zM13 1h2v10h-2z" fill="currentColor"/><rect x="22" y="1.5" width="16" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="23.8" y="3.3" width="10" height="5.4" rx="1.2" fill="currentColor"/><rect x="39.2" y="4" width="1.6" height="4" rx=".8" fill="currentColor"/></svg></div>
+          <div class="a-head"><h3>New coverage request</h3><p>214 Elm St. Open house Sat, Nov 21, 1–3 PM.</p></div>
+          <div class="a-body">
+            <div class="a-group" role="group" aria-labelledby="s2-who">
+              <p class="a-group__label" id="s2-who">Who can see it</p>
+              <div class="seg">
+                <button type="button" data-aud="brokerage" aria-pressed="true">My brokerage</button>
+                <button type="button" data-aud="wide" aria-pressed="false">Any verified agent nearby</button>
+              </div>
+              <p class="a-help" id="s2-aud-help">Your 13 colleagues at Harbor Realty.</p>
+              <label class="a-ok" id="s2-ok" hidden>
+                <input type="checkbox" id="s2-ok-box">
+                <span><b>The seller’s signed OK is on file</b>North Carolina requires it for an outside agent.</span>
+              </label>
+            </div>
+
+            <div class="a-group" role="group" aria-labelledby="s2-offer">
+              <p class="a-group__label" id="s2-offer">The offer</p>
+              <div class="a-row">
+                <div class="a-row__t" id="s2-leads-label">Covering agent keeps the buyer leads<span>You still get the whole sign-in list.</span></div>
+                <button type="button" class="sw" id="s2-leads" role="switch" aria-checked="true" aria-labelledby="s2-leads-label"></button>
+              </div>
+              <div class="a-fee" id="s2-fee-box">
+                <div class="a-fee__top"><label for="s2-fee">Fee</label><output id="s2-fee-out" for="s2-fee">No fee</output></div>
+                <input class="rng" type="range" id="s2-fee" min="0" max="200" step="5" value="0">
+                <div class="a-scale" aria-hidden="true"><span>$0</span><span>$100</span><span>$200</span></div>
+              </div>
+              <p class="a-help" id="s2-offer-help" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="a-dock">
+            <p class="a-dock__label">How covering agents will see it</p>
+            <div class="req req--mini" id="s2-preview" aria-live="polite"></div>
+            <button type="button" class="a-btn" id="s2-post">Post to Harbor Realty</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCREEN 3 ================= -->
+<section class="sec sec--rule screen" id="screen-3">
+  <div class="wrap">
+    <div class="screen__text">
+      <span class="plaque" aria-hidden="true">3</span>
+      <h2><span class="vh">Screen 3: </span>Find an open house to cover, and raise a hand</h2>
+      <p>Priya has a free weekend. Each coverage request leads with its offer and with how many groups came last time, because that’s what tells Priya whether the buyer leads are worth an afternoon.</p>
+      <p><b>The incentive.</b> 214 Elm St drew 11 groups last time, 4 with no agent: leads alone are a good offer. 9 Birch Ct drew 2, so Dana added $75. The offer is on the request before anything else, so nobody has to ask “what do I get?”.</p>
+      <p><b>Raising a hand.</b> Priya isn’t taking the request. Priya is telling Dana “I’m free and willing”, and that shows Dana Priya’s trust card. An agent can raise a hand on several requests, but not on two at the same hour.</p>
+      <p><b>The tradeoff.</b> First to say yes would be faster, and Priya would know at once. I chose raising a hand because the listing agent is handing over a client’s home and should choose who walks in. The cost is a wait, and sometimes not being picked. Priya hears either way.</p>
+      <p class="try">Try it: raise a hand on 214 Elm St, then scroll to 33 Garnet Way. Pull the distance down to 1 mile.</p>
+    </div>
+    <div class="stage">
+      <div class="whose whose--cover"><i></i><span><b>Priya Shah</b>, covering agent</span><span class="whose__when">Wed, Nov 18</span></div>
+      <div class="phone">
+        <div class="phone__screen" id="s3">
+          <div class="a-status"><span>9:08</span><svg width="42" height="12" viewBox="0 0 42 12" aria-hidden="true"><path d="M1 9h2v2H1zM5 7h2v4H5zM9 4h2v7H9zM13 1h2v10h-2z" fill="currentColor"/><rect x="22" y="1.5" width="16" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="23.8" y="3.3" width="10" height="5.4" rx="1.2" fill="currentColor"/><rect x="39.2" y="4" width="1.6" height="4" rx=".8" fill="currentColor"/></svg></div>
+          <div class="a-head"><h3>Open houses to cover</h3><p>Near you in Charlotte, nearest first</p></div>
+          <div class="flt">
+            <div class="flt__dist">
+              <output id="s3-dist-out" for="s3-dist">Within 10 mi</output>
+              <input class="rng" type="range" id="s3-dist" min="1" max="15" step="1" value="10" aria-label="Distance in miles">
+            </div>
+            <div class="flt__row">
+              <select id="s3-day" aria-label="Day">
+                <option value="any">Any day</option>
+                <option value="sat">Sat, Nov 21</option>
+                <option value="sun">Sun, Nov 22</option>
+              </select>
+              <button type="button" class="flt__fee" id="s3-fee" aria-pressed="false">Has a fee</button>
+            </div>
+          </div>
+          <div class="a-body" id="s3-list" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCREEN 4 ================= -->
+<section class="sec sec--rule screen" id="screen-4">
+  <div class="wrap">
+    <div class="screen__text">
+      <span class="plaque" aria-hidden="true">4</span>
+      <h2><span class="vh">Screen 4: </span>Pick from trust cards, then rate</h2>
+      <p>Three agents raised a hand for 214 Elm St. Dana has never met any of them. Each has a trust card, and every line on it says where it came from: the state record, Porch Partner’s own count, or other listing agents.</p>
+      <p><b>The decision.</b> Facts first. The license line is read from the state record today. The track record is counted by Porch Partner. The only opinion is one yes-or-no question. I show counts, never percentages or stars: 7 of 7 and 12 of 12 are different amounts of evidence, and a 4.8 hides both.</p>
+      <p><b>Picking.</b> Dana picks one, and the others are asked to stay as backups in the order they raised a hand. Dana can mark colleagues and agents who’ve covered before, so their raised hand is picked at once.</p>
+      <p><b>On the day.</b> The picked agent checks in at the house, by location, at least 15 minutes before the start. The lockbox code shows only then. Every group that visits goes on the sign-in list. The whole list goes to Dana; the groups with no agent are the covering agent’s buyer leads.</p>
+      <p><b>Rating.</b> Afterwards each side answers one question about the other. Neither sees the other’s answer until both are in, so nobody answers to get even.</p>
+      <p><b>The tradeoff.</b> A yes or a no loses nuance, and a new agent’s card is nearly empty. I’d rather a card say New than show three stars from nobody. New agents get their first covers inside their own brokerage, where colleagues already know them. That star averages inflate is shown for one online marketplace, not for agents, and that one question does better is my own reasoning.</p>
+      <p class="try">Try it: open each card and pick someone. Then use the dashed box to jump to after the open house.</p>
+    </div>
+    <div class="stage">
+      <div class="whose"><i></i><span><b>Dana Ruiz</b>, listing agent</span><span class="whose__when" id="s4-when">Thu, Nov 19</span></div>
+      <div class="sim">
+        <div class="sim__seg" role="group" aria-label="Jump to">
+          <button type="button" class="sim__btn" data-phase="pick" aria-pressed="true">Thu: three hands are up</button>
+          <button type="button" class="sim__btn" data-phase="after" aria-pressed="false">Sat: the open house is over</button>
+        </div>
+        <span class="sim__say" id="s4-say" hidden></span>
+        <button type="button" class="sim__btn sim__btn--go" id="s4-other" hidden></button>
+        <button class="sim__reset" type="button" id="s4-reset">Start over</button>
+      </div>
+      <div class="phone"><div class="phone__screen" id="s4" aria-live="polite"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCREEN 5 ================= -->
+<section class="sec sec--rule screen" id="screen-5">
+  <div class="wrap">
+    <div class="screen__text">
+      <span class="plaque" aria-hidden="true">5</span>
+      <h2><span class="vh">Screen 5: </span>When things go wrong</h2>
+      <p>Four things I expect to go wrong most. In each one Dana’s phone says what happened, what Porch Partner has already done about it, and what’s left for Dana to decide.</p>
+      <p><b>The decision.</b> Backups are the plan. Because agents raised a hand instead of one of them grabbing the request, someone who already said yes is waiting behind the pick. A cancellation, or a license that stops being active, hands the cover to the first backup without Dana doing anything. A no-show is different: with 15 minutes left Dana chooses, because only Dana knows whether a phone call will fix it.</p>
+      <div class="does" aria-live="polite">
+        <h4 id="s5-does-h">What Porch Partner does</h4>
+        <ul id="s5-does"></ul>
+      </div>
+      <p><b>It cuts both ways.</b> A listing agent who cancels inside 24 hours still owes any fee.</p>
+      <p><b>What I haven’t designed.</b> Damage to the home, safety at the door, and two agents disagreeing over who met a buyer first. I’m assuming cancellations and no-shows matter most. No agent has told me so.</p>
+      <p class="try">Try it: choose what goes wrong in the dashed box, then make Dana’s choice inside the phone.</p>
+    </div>
+    <div class="stage">
+      <div class="whose"><i></i><span><b>Dana Ruiz</b>, listing agent</span><span class="whose__when" id="s5-when"></span></div>
+      <div class="sim">
+        <label for="s5-what">What if</label>
+        <select id="s5-what" style="flex-basis:260px">
+          <option value="cancel">the picked agent cancels</option>
+          <option value="noshow">no check-in 15 minutes before</option>
+          <option value="license">the license is no longer active</option>
+          <option value="nohands">no one raises a hand</option>
+        </select>
+        <button type="button" class="sim__btn sim__btn--go" id="s5-other" hidden></button>
+        <button class="sim__reset" type="button" id="s5-reset">Start over</button>
+      </div>
+      <div class="phone"><div class="phone__screen" id="s5" aria-live="polite"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ASSUMPTIONS ================= -->
+<section class="sec sec--rule" id="assumptions">
+  <div class="wrap">
+    <h2>What I know and what I’m guessing</h2>
+    <div class="prose">
+      <p>Every decision above rests on assumptions, and I logged all 35. I read a source for 12 of them. Another 4 rest on something thinner: a search summary whose pages I haven’t opened, a forum thread, or one guide that only partly backs the point. The other 19 are my own reasoning, or guesses nobody has checked.</p>
+      <p>No agent interviews stand behind this design. That’s the first thing I’d fix.</p>
+    </div>
+    <div class="tally">
+      <div class="tally__bar" id="tally" role="img" aria-label="35 assumptions: 12 read in a source, 4 thinly supported, 19 unproved"></div>
+      <div class="tally__key">
+        <span><i class="p"></i>12 read in a source</span>
+        <span><i class="t"></i>4 thinly supported</span>
+        <span><i class="u"></i>19 unproved</span>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>The ones I’d test first</h3>
+      <p class="prose">All unproved, and each would change a screen.</p>
+      <ul class="first">
+        <li class="first__h" aria-hidden="true"><p>I’m assuming</p><p>If I’m wrong</p></li>
+        <li><p>The brief means agents from other brokerages can cover, not only colleagues.</p><p>Same brokerage only becomes enough, and most of the trust and license work shrinks.</p></li>
+        <li><p>Listing agents will give up the visitors with no agent, because they’re too busy to follow up.</p><p>Buyer leads become a choice on each request, not the default.</p></li>
+        <li><p>A photo ID whose name matches the license is enough to tie an account to the licensed agent.</p><p>Sign-up gains a step: a code sent to the email on the Commission’s record, or the agent’s broker-in-charge confirms.</p></li>
+        <li><p>Listing agents want to choose who covers their listing.</p><p>First to say yes is faster and simpler, and screen 4 mostly goes.</p></li>
+        <li><p>Agents who raised a hand and weren’t picked will agree to wait as backups.</p><p>A cancellation falls back to posting the request again.</p></li>
+        <li><p>The seller’s signed OK can also let the covering agent work with buyers met at the open house.</p><p>For outside agents, leads need a second sign-off or the offer falls back to a fee.</p></li>
+        <li><p>Covering agents are fine with checking in by location.</p><p>“On time” has to come from the listing agent’s say-so.</p></li>
+        <li><p>One yes-or-no question inflates less than stars and still tells agents apart.</p><p>Add a second question, or tags.</p></li>
+      </ul>
+
+      <details class="all">
+        <summary>All 35 assumptions, with sources</summary>
+        <table class="atable">
+          <thead><tr><th>No.</th><th>I’m assuming</th><th>How I know</th><th>If I’m wrong</th></tr></thead>
+          <tbody id="atable"></tbody>
+        </table>
+      </details>
+    </div>
+
+    <div class="sub">
+      <h3>Still open</h3>
+      <ul class="open">
+        <li>How an outside agent’s fee is paid in North Carolina. South Carolina and Texas say only through the agent’s own broker; North Carolina I haven’t proved.</li>
+        <li>Whether the listing agent’s broker must agree to widening. North Carolina’s commission notes that a brokerage’s insurance often covers only its own agents.</li>
+        <li>Whether a request should widen by itself after a set time, not only by hand.</li>
+        <li>Whether colleagues at another branch of the same brokerage count as insiders in North Carolina.</li>
+        <li>Whether a provisional broker, North Carolina’s name for a new agent like Tom, may host for another brokerage.</li>
+        <li>Two I’d ask before building: whether “agents nearby” is meant to include other brokerages, and which state comes first.</li>
+      </ul>
+    </div>
+
+    <div class="sub" id="states">
+      <h3>State rules, briefly</h3>
+      <p class="prose">Who may host an open house for another brokerage is a matter of state law, and the three states I read disagree. I’m not a lawyer and this isn’t legal advice.</p>
+      <ul class="states">
+        <li><b>North Carolina</b><div>Allows it. An outside agent may host as the seller’s agent, with the seller’s written, signed permission.<span class="fine"><a href="https://bulletins.ncrec.gov/getting-agency-representation-correct-clarifying-the-practice-of-seller-subagency" target="_blank" rel="noopener">NC Real Estate Commission bulletin, April 2021</a> and <a href="https://www.ncrealtors.org/question/can-an-agent-from-my-firm-host-an-open-house-when-the-listing-is-with-another-firm" target="_blank" rel="noopener">NC REALTORS Legal Q&amp;A, Aug 21, 2025</a></span></div></li>
+        <li><b>South Carolina</b><div>Doesn’t allow it. An agent can’t host for another brokerage, or for another broker-in-charge inside the same brokerage.<span class="fine"><a href="https://www.llr.sc.gov/re/News/Same%20Brokerage%20Different%20BICs%20-%20FINAL.pdf" target="_blank" rel="noopener">SC Real Estate Commission guidance, Nov 20, 2025</a></span></div></li>
+        <li><b>California</b><div>No ban, but the regulator advises against it.<span class="fine"><a href="https://dre.ca.gov/newsroom/DRE_Updates/2025_06_12_Understanding_Open_House_Broker_Sittings.html" target="_blank" rel="noopener">CA Department of Real Estate, June 12, 2025</a></span></div></li>
+        <li><b>The other 47</b><div>Unread. In Porch Partner each one starts closed to outside agents until someone has read its rules.</div></li>
+      </ul>
+    </div>
+
+    <div class="sub" id="made">
+      <h3>How this was made</h3>
+      <div class="prose">
+        <p>I built this with Claude Code. I made the four product decisions one at a time, arguing each against its alternatives, and logged the assumptions under each one as I went. Claude Code then built this page from those decisions and proposed the details I hadn’t settled.</p>
+        <p>Nothing here talks to a server. The screens are plain HTML, CSS and JavaScript in one file.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Porch Partner</b><br>A take-home design by Ofer, November 2026.</p>
+    <p>The people, addresses, brokerages and numbers are made up.<br>The state rules are real. None of this is legal advice.</p>
+  </div>
+</footer>
+
+<noscript><p style="padding:16px;background:#FDF0CC">The five demo screens need JavaScript to run.</p></noscript>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- helpers ---------- */
+var $ = function(s, r){ return (r || document).querySelector(s); };
+var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+var esc = function(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+
+/* Re-draw a phone screen and keep keyboard focus where it was. */
+function paint(el, html){
+  var a = document.activeElement;
+  var had = a && el.contains(a);
+  var key = had ? a.getAttribute('data-k') : null;
+  var top = $('.a-body', el) ? $('.a-body', el).scrollTop : 0;
+  el.innerHTML = html;
+  var body = $('.a-body', el);
+  if (body && el._keep) body.scrollTop = top;
+  el._keep = false;
+  if (had){
+    var t = key ? el.querySelector('[data-k="' + key + '"]') : null;
+    if (t) t.focus({preventScroll:true});
+    else { el.setAttribute('tabindex', '-1'); el.focus({preventScroll:true}); }
+  }
+}
+function on(el, type, sel, fn){
+  el.addEventListener(type, function(e){
+    var t = e.target.closest(sel);
+    if (t && el.contains(t)) fn(t, e);
+  });
+}
+
+var ICON = {
+  check: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.6l3.2 3.2L13 4.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  checkLg: '<svg width="24" height="24" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.6l3.2 3.2L13 4.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  bang: '<svg width="24" height="24" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.5v5.5M8 12v.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  chev: '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  card: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><circle cx="8.5" cy="11" r="2"/><path d="M5.8 15.6c.6-1.3 4.8-1.3 5.4 0M14 10h4.5M14 13.5h3"/></svg>',
+  face: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="3.6"/><path d="M5 20c.8-4 13.2-4 14 0"/></svg>',
+  house: '<svg width="18" height="18" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#14312D"/><path d="M7 16 16 8l9 8M10 14.5V24h12v-9.5" fill="none" stroke="#F6BD41" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+var BARS = '<svg width="42" height="12" viewBox="0 0 42 12" aria-hidden="true"><path d="M1 9h2v2H1zM5 7h2v4H5zM9 4h2v7H9zM13 1h2v10h-2z" fill="currentColor"/><rect x="22" y="1.5" width="16" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="23.8" y="3.3" width="10" height="5.4" rx="1.2" fill="currentColor"/><rect x="39.2" y="4" width="1.6" height="4" rx=".8" fill="currentColor"/></svg>';
+function status(t){ return '<div class="a-status"><span>' + t + '</span>' + BARS + '</div>'; }
+
+/* ---------- made-up people ---------- */
+var AGENTS = {
+  priya: { id:'priya', name:'Priya Shah', first:'Priya', ini:'PS', av:'', brokerage:'Queen City Homes', miles:2, licensed:'14 months', license:'312045',
+           covers:7, onTime:7, cancels:0, yes:7, answered:7, coveredFor:'Marcus Bell and Jo Lin, your colleagues at Harbor Realty' },
+  alex:  { id:'alex', name:'Alex Kim', first:'Alex', ini:'AK', av:' av--alex', brokerage:'Dogwood Realty', miles:5, licensed:'3 years', license:'287310',
+           covers:12, onTime:12, cancels:1, yes:11, answered:12, coveredFor:'Nobody at Harbor Realty yet' },
+  tom:   { id:'tom', name:'Tom Reyes', first:'Tom', ini:'TR', av:' av--tom', brokerage:'Queen City Homes', miles:3, licensed:'2 months', license:'318877',
+           covers:0, onTime:0, cancels:0, yes:0, answered:0, coveredFor:'Nobody yet' }
+};
+var ORDER = ['priya', 'alex', 'tom']; /* the order they raised a hand */
+
+function strip(a){
+  if (!a.covers) return '<p class="tc__new">No covers yet, so nothing to count. A card says New until 3 covers.</p>';
+  return '<dl class="tc__strip">' +
+    '<div><dt>covers</dt><dd>' + a.covers + '</dd></div>' +
+    '<div><dt>on time</dt><dd>' + a.onTime + ' of ' + a.covers + '</dd></div>' +
+    '<div><dt>cancelled</dt><dd>' + a.cancels + '</dd></div>' +
+    '<div><dt>said yes</dt><dd>' + a.yes + ' of ' + a.answered + '</dd></div>' +
+  '</dl>';
+}
+function dots(a){
+  var h = '<div class="dots" aria-hidden="true">';
+  for (var i = 0; i < a.answered; i++) h += '<i' + (i >= a.yes ? ' class="no"' : '') + '></i>';
+  return h + '</div>';
+}
+
+/* =====================================================
+   SCREEN 1  Sign up and license check
+   ===================================================== */
+var s1 = { step:'form', outcome:'active', name:'Tom Reyes', num:'318877', id:false, selfie:false, err:'' };
+var s1el = $('#s1'), s1timer = null;
+
+function s1render(){
+  var h = status('2:14'), num = esc(s1.num), name = esc(s1.name);
+  var brand = '<div class="a-brand">' + ICON.house + 'Porch Partner</div>';
+
+  if (s1.step === 'form' || s1.step === 'busy'){
+    var busy = s1.step === 'busy';
+    h += '<div class="a-body">' + brand +
+      '<div class="a-steps" aria-hidden="true"><i class="on"></i><i></i></div><p class="a-steplabel">Step 1 of 2</p>' +
+      '<h3 class="a-h">Find your license</h3>' +
+      '<p class="a-sub">We read it from the state record, the list of licensed agents North Carolina’s Real Estate Commission publishes. There’s nothing to upload.</p>' +
+      '<div class="a-field"><span>State</span><div class="a-fixed">North Carolina<small>The only state so far</small></div></div>' +
+      '<label class="a-field"><span>Name on your license</span><input type="text" data-f="name" data-k="name" value="' + name + '" autocomplete="off"' + (busy ? ' disabled' : '') + '></label>' +
+      '<label class="a-field"><span>License number</span><input type="text" inputmode="numeric" data-f="num" data-k="num" value="' + num + '" autocomplete="off"' + (busy ? ' disabled' : '') + '></label>' +
+      (s1.err ? '<p class="a-err">' + s1.err + '</p>' : '') +
+      '</div><div class="a-dock"><button type="button" class="a-btn" data-act="check" data-k="main"' + (busy ? ' disabled style="background:var(--ink);cursor:progress"' : '') + '>' +
+      (busy ? '<span class="spin"></span>Reading the state record' : 'Check my license') + '</button></div>';
+  }
+
+  else if (s1.step === 'result' && s1.outcome === 'active'){
+    h += '<div class="a-body">' + brand +
+      '<div class="a-steps" aria-hidden="true"><i class="on"></i><i></i></div><p class="a-steplabel">Step 1 of 2</p>' +
+      '<div class="seal seal--ok">' + ICON.checkLg + '</div>' +
+      '<h3 class="a-h">Found, and it’s active</h3>' +
+      '<dl class="rec">' +
+        '<div class="rec__row"><dt>Name</dt><dd>' + name + '</dd></div>' +
+        '<div class="rec__row"><dt>License</dt><dd>NC ' + num + '</dd></div>' +
+        '<div class="rec__row"><dt>Status</dt><dd><span class="tag tag--ok">' + ICON.check + 'Active</span></dd></div>' +
+        '<div class="rec__row"><dt>Level</dt><dd>Provisional broker</dd></div>' +
+        '<div class="rec__row"><dt>Brokerage</dt><dd>Queen City Homes</dd></div>' +
+        '<div class="rec__row"><dt>Licensed</dt><dd>2 months</dd></div>' +
+        '<p class="rec__src src">from the North Carolina state record, read today, Tue, Nov 17</p>' +
+      '</dl>' +
+      '<p class="a-help">We read it again every morning. If it stops being active, you hear from us that day.</p>' +
+      '</div><div class="a-dock"><button type="button" class="a-btn" data-act="toid" data-k="main">Continue to photo ID</button></div>';
+  }
+
+  else if (s1.step === 'result' && s1.outcome === 'inactive'){
+    h += '<div class="a-body">' + brand +
+      '<div class="a-steps" aria-hidden="true"><i class="on"></i><i></i></div><p class="a-steplabel">Step 1 of 2</p>' +
+      '<div class="seal seal--bad">' + ICON.bang + '</div>' +
+      '<h3 class="a-h">License ' + num + ' isn’t active</h3>' +
+      '<p class="a-sub">The state record lists it as not active, so you can’t cover open houses yet.</p>' +
+      '<dl class="rec">' +
+        '<div class="rec__row"><dt>License</dt><dd>NC ' + num + '</dd></div>' +
+        '<div class="rec__row"><dt>Status</dt><dd><span class="tag tag--bad">Not active</span></dd></div>' +
+        '<p class="rec__src src">from the North Carolina state record, read today, Tue, Nov 17</p>' +
+      '</dl>' +
+      '<p class="a-sub"><b>What to do.</b> Renew or reactivate it with the North Carolina Real Estate Commission. Once the state record shows it as active, check again. There’s nothing to send us.</p>' +
+      '</div><div class="a-dock"><button type="button" class="a-btn" data-act="check" data-k="main">Check again</button>' +
+      '<button type="button" class="a-btn a-btn--ghost" data-act="edit" data-k="edit">Use a different number</button></div>';
+  }
+
+  else if (s1.step === 'result' && s1.outcome === 'mismatch'){
+    h += '<div class="a-body">' + brand +
+      '<div class="a-steps" aria-hidden="true"><i class="on"></i><i></i></div><p class="a-steplabel">Step 1 of 2</p>' +
+      '<div class="seal seal--bad">' + ICON.bang + '</div>' +
+      '<h3 class="a-h">The name doesn’t match</h3>' +
+      '<p class="a-sub">License ' + num + ' is on the state record under a different name than “' + name + '”.</p>' +
+      '<dl class="rec">' +
+        '<div class="rec__row"><dt>You entered</dt><dd>' + name + '</dd></div>' +
+        '<div class="rec__row"><dt>License</dt><dd>NC ' + num + '</dd></div>' +
+        '<div class="rec__row"><dt>Name on record</dt><dd><span class="tag tag--bad">Different</span></dd></div>' +
+        '<p class="rec__src src">from the North Carolina state record, read today, Tue, Nov 17</p>' +
+      '</dl>' +
+      '<p class="a-sub"><b>What to do.</b> Enter your name exactly as it’s printed on your license, or check the number for a typo.</p>' +
+      '</div><div class="a-dock"><button type="button" class="a-btn" data-act="edit" data-k="main">Edit name or number</button></div>';
+  }
+
+  else if (s1.step === 'id'){
+    h += '<div class="a-body">' + brand +
+      '<div class="a-steps" aria-hidden="true"><i class="on"></i><i class="on"></i></div><p class="a-steplabel">Step 2 of 2</p>' +
+      '<h3 class="a-h">Now show it’s you</h3>' +
+      '<p class="a-sub">License numbers are public, so anyone could type yours. A photo ID and a selfie tie this account to you.</p>' +
+      '<div style="margin-top:18px">' +
+      '<div class="idtile"><span class="idtile__pic' + (s1.id ? ' is-done' : '') + '">' + (s1.id ? ICON.checkLg : ICON.card) + '</span>' +
+        '<div class="idtile__t"><b>Photo ID</b><span>' + (s1.id ? 'Added. The name matches your license.' : 'Driver’s license or passport') + '</span></div>' +
+        (s1.id ? '' : '<button type="button" class="a-btn a-btn--ghost" data-act="addid" data-k="addid">Add photo</button>') + '</div>' +
+      '<div class="idtile"><span class="idtile__pic' + (s1.selfie ? ' is-done' : '') + '">' + (s1.selfie ? ICON.checkLg : ICON.face) + '</span>' +
+        '<div class="idtile__t"><b>Selfie</b><span>' + (s1.selfie ? 'Added. It matches your photo ID.' : 'We compare it with your ID photo') + '</span></div>' +
+        (s1.selfie ? '' : '<button type="button" class="a-btn a-btn--ghost" data-act="addselfie" data-k="addselfie">Take selfie</button>') + '</div>' +
+      '</div></div><div class="a-dock"><button type="button" class="a-btn" data-act="finish" data-k="main"' + (s1.id && s1.selfie ? '' : ' disabled') + '>' +
+      (s1.id && s1.selfie ? 'Finish' : 'Add both to finish') + '</button></div>';
+  }
+
+  else { /* done */
+    h += '<div class="a-body">' + brand +
+      '<div class="seal seal--ok" style="margin-top:18px">' + ICON.checkLg + '</div>' +
+      '<h3 class="a-h">You’re a verified agent</h3>' +
+      '<p class="a-sub">This is your trust card. A listing agent sees it when you raise a hand on their request.</p>' +
+      '<div class="tc" style="margin-top:16px">' +
+        '<div class="tc__head" style="cursor:default"><span class="av av--lg av--tom" aria-hidden="true">TR</span>' +
+          '<span class="tc__who"><b>' + name + '</b><span>Queen City Homes</span></span><span class="tag tag--new">New</span></div>' +
+        '<p class="tc__lic">' + ICON.check + '<span><b>License active.</b> NC ' + num + ', checked against the state record today.</span></p>' +
+        '<p class="tc__new">No covers yet, so nothing to count. A card says New until 3 covers.</p>' +
+      '</div>' +
+      '<p class="a-help">A good place to start: requests from your Queen City Homes colleagues, who know you already.</p>' +
+      '</div><div class="a-dock"><button type="button" class="a-btn a-btn--ghost" data-act="restart" data-k="main">Start over</button></div>';
+  }
+  paint(s1el, h);
+}
+function s1check(){
+  if (!s1.num.trim() || !s1.name.trim()){ s1.err = 'Enter your name and license number.'; s1.step = 'form'; s1render(); return; }
+  s1.err = ''; s1.step = 'busy'; s1.id = false; s1.selfie = false; s1render();
+  clearTimeout(s1timer);
+  s1timer = setTimeout(function(){ s1.step = 'result'; s1render(); }, 850);
+}
+on(s1el, 'input', '[data-f]', function(t){ s1[t.getAttribute('data-f')] = t.value; });
+on(s1el, 'keydown', '[data-f]', function(t, e){ if (e.key === 'Enter') s1check(); });
+on(s1el, 'click', '[data-act]', function(t){
+  if (t.disabled) return;
+  var a = t.getAttribute('data-act');
+  if (a === 'check') return s1check();
+  if (a === 'edit') s1.step = 'form';
+  if (a === 'toid') s1.step = 'id';
+  if (a === 'addid') s1.id = true;
+  if (a === 'addselfie') s1.selfie = true;
+  if (a === 'finish') s1.step = 'done';
+  if (a === 'restart') return s1reset();
+  s1render();
+});
+function s1reset(){
+  clearTimeout(s1timer);
+  s1 = { step:'form', outcome:$('#s1-out').value, name:'Tom Reyes', num:'318877', id:false, selfie:false, err:'' };
+  s1render();
+}
+$('#s1-out').addEventListener('change', function(){ s1.outcome = this.value; s1check(); });
+$('#s1-reset').addEventListener('click', function(){ $('#s1-out').value = 'active'; s1reset(); });
+s1render();
+
+/* =====================================================
+   SCREEN 2  Post a coverage request
+   ===================================================== */
+var s2 = { aud:'brokerage', ok:false, leads:true, fee:0, posted:false, msg:'' };
+var s2fee = $('#s2-fee'), s2leads = $('#s2-leads'), s2post = $('#s2-post');
+
+function offerChips(leads, fee, who){
+  var h = '';
+  if (leads) h += '<span class="chip chip--leads">You keep the buyer leads</span>';
+  if (fee) h += '<span class="chip chip--fee">$' + fee + ' fee</span>';
+  if (!leads) h += '<span class="chip chip--none">Buyer leads stay with ' + who + '</span>';
+  return h;
+}
+function s2update(){
+  $$('#s2 [data-aud]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-aud') === s2.aud)); });
+  var wide = s2.aud === 'wide';
+  $('#s2-aud-help').textContent = wide ? 'Colleagues, plus verified agents within 10 miles.' : 'Your 13 colleagues at Harbor Realty.';
+  $('#s2-ok').hidden = !wide;
+  $('#s2-ok-box').checked = s2.ok;
+
+  s2leads.setAttribute('aria-checked', String(s2.leads));
+  s2leads.setAttribute('aria-disabled', String(s2.fee === 0));
+  s2fee.value = s2.fee;
+  s2fee.style.setProperty('--p', (s2.fee / 200 * 100) + '%');
+  s2fee.setAttribute('aria-valuetext', s2.fee ? '$' + s2.fee : 'No fee');
+  $('#s2-fee-out').textContent = s2.fee ? '$' + s2.fee : 'No fee';
+
+  var help = $('#s2-offer-help');
+  help.className = 'a-help';
+  if (s2.msg === 'needfee'){ help.className = 'a-help a-help--warn'; help.textContent = 'Add a fee first. A request always offers something.'; }
+  else if (s2.msg === 'backon'){ help.className = 'a-help a-help--note'; help.textContent = 'Buyer leads are back on. With no fee, they are the offer.'; }
+  else if (s2.fee) help.textContent = 'Harbor Realty pays their brokerage afterwards.';
+  else help.textContent = 'A fee fills a request faster.';
+  $('#s2-fee-box').classList.toggle('is-nudged', s2.msg === 'needfee');
+
+  $('#s2-preview').innerHTML =
+    '<div class="req__row"><div class="req__addr">214 Elm St</div><span>Sat, Nov 21, 1–3 PM</span></div>' +
+    '<div class="req__by">Dana Ruiz, Harbor Realty</div>' +
+    '<div class="req__offer">' + offerChips(s2.leads, s2.fee, 'Dana') + '</div>' +
+    '<div class="req__last">Last open house here: 11 groups, 4 with no agent</div>';
+
+  var blocked = wide && !s2.ok;
+  s2post.disabled = blocked;
+  s2post.className = 'a-btn' + (s2.posted ? ' a-btn--done' : '');
+  if (s2.posted) s2post.innerHTML = ICON.check + (wide ? 'Posted to verified agents nearby' : 'Posted to 13 colleagues');
+  else if (blocked) s2post.textContent = 'Confirm the seller’s signed OK to post';
+  else s2post.textContent = wide ? 'Post to verified agents nearby' : 'Post to Harbor Realty';
+}
+function s2touch(){ s2.posted = false; }
+on($('#s2'), 'click', '[data-aud]', function(t){ s2.aud = t.getAttribute('data-aud'); s2.msg = ''; s2touch(); s2update(); });
+$('#s2-ok-box').addEventListener('change', function(){ s2.ok = this.checked; s2touch(); s2update(); });
+s2leads.addEventListener('click', function(){
+  if (s2.fee === 0){ s2.msg = 'needfee'; s2.leads = true; }
+  else { s2.leads = !s2.leads; s2.msg = ''; }
+  s2touch(); s2update();
+});
+s2fee.addEventListener('input', function(){
+  s2.fee = +this.value;
+  s2.msg = '';
+  if (s2.fee === 0 && !s2.leads){ s2.leads = true; s2.msg = 'backon'; }
+  s2touch(); s2update();
+});
+s2post.addEventListener('click', function(){ if (!s2post.disabled && !s2.posted){ s2.posted = true; s2.msg = ''; s2update(); } });
+s2update();
+
+/* =====================================================
+   SCREEN 3  Find and raise a hand
+   ===================================================== */
+var REQS = [
+  { id:'wren',   addr:'58 Wren Ave',   day:'sat', date:'Sat, Nov 21', time:'10 AM–12 PM', s:10, e:12, mi:1,  by:'Sam Ortiz',  first:'Sam',  firm:'Queen City Homes', own:true, leads:true,  fee:0,  last:'First open house here' },
+  { id:'elm',    addr:'214 Elm St',    day:'sat', date:'Sat, Nov 21', time:'1–3 PM',      s:13, e:15, mi:2,  by:'Dana Ruiz',  first:'Dana', firm:'Harbor Realty',    leads:true,  fee:0,  last:'Last open house here: 11 groups, 4 with no agent' },
+  { id:'birch',  addr:'9 Birch Ct',    day:'sun', date:'Sun, Nov 22', time:'1–3 PM',      s:13, e:15, mi:4,  by:'Dana Ruiz',  first:'Dana', firm:'Harbor Realty',    leads:true,  fee:75, last:'Last open house here: 2 groups' },
+  { id:'mill',   addr:'1702 Mill Rd',  day:'sun', date:'Sun, Nov 22', time:'2–4 PM',      s:14, e:16, mi:6,  by:'Lena Park',  first:'Lena', firm:'Dogwood Realty',   leads:false, fee:50, last:'Last open house here: 8 groups, 2 with no agent' },
+  { id:'garnet', addr:'33 Garnet Way', day:'sat', date:'Sat, Nov 21', time:'2–4 PM',      s:14, e:16, mi:8,  by:'Omar Haddad', first:'Omar', firm:'Dogwood Realty',  leads:true,  fee:40, last:'Last open house here: 6 groups, 3 with no agent' },
+  { id:'lark',   addr:'6 Larkspur Ln', day:'sun', date:'Sun, Nov 22', time:'12–2 PM',     s:12, e:14, mi:12, by:'Grace Liu',  first:'Grace', firm:'Harbor Realty',   leads:true,  fee:0,  last:'Last open house here: 5 groups, 2 with no agent' }
+];
+var s3 = { dist:10, day:'any', fee:false, up:{} };
+var s3list = $('#s3-list'), s3dist = $('#s3-dist');
+
+function clash(r){
+  for (var i = 0; i < REQS.length; i++){
+    var o = REQS[i];
+    if (o.id !== r.id && s3.up[o.id] && o.day === r.day && o.s < r.e && r.s < o.e) return o;
+  }
+  return null;
+}
+function s3render(){
+  s3dist.style.setProperty('--p', ((s3.dist - 1) / 14 * 100) + '%');
+  s3dist.setAttribute('aria-valuetext', s3.dist + (s3.dist === 1 ? ' mile' : ' miles'));
+  $('#s3-dist-out').textContent = 'Within ' + s3.dist + ' mi';
+  $('#s3-fee').setAttribute('aria-pressed', String(s3.fee));
+
+  var rows = REQS.filter(function(r){
+    return r.mi <= s3.dist && (s3.day === 'any' || r.day === s3.day) && (!s3.fee || r.fee > 0);
+  });
+  var h = '';
+  if (!rows.length){
+    var why = 'Nothing within ' + s3.dist + (s3.dist === 1 ? ' mile' : ' miles') +
+      (s3.day === 'sat' ? ' on Saturday' : s3.day === 'sun' ? ' on Sunday' : '') + (s3.fee ? ' with a fee' : '') + '.';
+    h = '<div class="a-empty"><b>No coverage requests match</b><p>' + why + ' Widen the distance or clear a filter.</p>' +
+        '<button type="button" class="a-btn a-btn--ghost a-btn--sm" data-act="clear" data-k="clear">Clear filters</button></div>';
+  } else {
+    h = '<p class="a-count">' + rows.length + (rows.length === 1 ? ' open house needs cover' : ' open houses need cover') + '</p>';
+    rows.forEach(function(r){
+      var up = !!s3.up[r.id], c = up ? null : clash(r);
+      h += '<article class="req req--list' + (up ? ' is-up' : '') + '">' +
+        '<div class="req__top"><span>' + r.date + ', ' + r.time + '</span><span>' + r.mi + ' mi</span></div>' +
+        '<div class="req__addr">' + r.addr + '</div>' +
+        '<div class="req__by">' + r.by + ', ' + r.firm + (r.own ? ' <span class="chip chip--own">Your brokerage</span>' : '') + '</div>' +
+        '<div class="req__offer">' + offerChips(r.leads, r.fee, r.first) + '</div>' +
+        '<div class="req__last">' + r.last + '</div>';
+      if (up){
+        h += '<div class="raised"><b>Hand raised</b>' + r.first + ' can see your trust card and will pick. You’ll hear either way.' +
+             '<br><button type="button" class="a-link" data-act="down" data-id="' + r.id + '" data-k="b-' + r.id + '">Take it back</button></div>';
+      } else if (c){
+        h += '<button type="button" class="a-btn a-btn--sm" disabled data-k="b-' + r.id + '">Same hours as ' + c.addr + '</button>';
+      } else {
+        h += '<button type="button" class="a-btn a-btn--light a-btn--sm" data-act="up" data-id="' + r.id + '" data-k="b-' + r.id + '">Raise a hand</button>';
+      }
+      h += '</article>';
+    });
+  }
+  s3list.innerHTML = h;
+}
+function s3paint(focusKey){
+  var top = s3list.scrollTop;
+  s3render();
+  s3list.scrollTop = top;
+  if (focusKey){ var t = s3list.querySelector('[data-k="' + focusKey + '"]'); if (t) t.focus({preventScroll:true}); }
+}
+s3dist.addEventListener('input', function(){ s3.dist = +this.value; s3render(); });
+$('#s3-day').addEventListener('change', function(){ s3.day = this.value; s3render(); });
+$('#s3-fee').addEventListener('click', function(){ s3.fee = !s3.fee; s3render(); });
+on(s3list, 'click', '[data-act]', function(t){
+  var a = t.getAttribute('data-act'), id = t.getAttribute('data-id');
+  if (a === 'up'){ s3.up[id] = true; s3paint('b-' + id); }
+  if (a === 'down'){ delete s3.up[id]; s3paint('b-' + id); }
+  if (a === 'clear'){ s3.dist = 10; s3.day = 'any'; s3.fee = false; s3dist.value = 10; $('#s3-day').value = 'any'; s3render(); }
+});
+s3render();
+
+/* =====================================================
+   SCREEN 4  Pick from trust cards, then rate
+   ===================================================== */
+var s4 = { phase:'pick', open:'priya', picked:null, list:false, answer:null, revealed:false };
+var s4el = $('#s4');
+
+var SIGNIN = [
+  ['1:04 PM', 'Hannah and Luis Ortega', true,  'Liked the porch. Asked about the roof.'],
+  ['1:10 PM', 'Deb Walsh',              false, 'Pre-approved. Wants this school zone.'],
+  ['1:22 PM', 'The Abara family',       true,  'Second visit.'],
+  ['1:31 PM', 'Kenji Mori',             false, 'Moving here in January.'],
+  ['1:40 PM', 'R. Castillo',            true,  'Lives on the street. Just looking.'],
+  ['1:58 PM', 'Simone Petit',           true,  'Asked whether there are offers.'],
+  ['2:15 PM', 'Ines and Paul Graf',     false, 'Renting nearby. First home.'],
+  ['2:32 PM', 'T. Whitfield',           true,  'No comment left.'],
+  ['2:47 PM', 'Maya Chen',              true,  'Wants a second showing.']
+];
+
+function trustCard(a){
+  var open = s4.open === a.id, state = '';
+  if (s4.picked){
+    if (s4.picked === a.id) state = '<span class="tag tag--pick">Picked</span>';
+    else {
+      var n = ORDER.filter(function(x){ return x !== s4.picked; }).indexOf(a.id) + 1;
+      state = '<span class="tag tag--backup">Backup ' + n + '</span>';
+    }
+  } else if (a.covers < 3) state = '<span class="tag tag--new">New</span>';
+
+  var h = '<article class="tc' + (open ? ' is-open' : '') + (s4.picked === a.id ? ' is-picked' : '') + '">' +
+    '<button type="button" class="tc__head" data-act="toggle" data-id="' + a.id + '" data-k="t-' + a.id + '" aria-expanded="' + open + '">' +
+      '<span class="av av--lg' + a.av + '" aria-hidden="true">' + a.ini + '</span>' +
+      '<span class="tc__who"><b>' + a.name + '</b><span>' + a.brokerage + ', ' + a.miles + ' miles away</span></span>' +
+      state + '<span class="tc__chev">' + ICON.chev + '</span>' +
+    '</button>' +
+    '<p class="tc__lic">' + ICON.check + '<span><b>License active.</b> Checked against the state record today.</span></p>' +
+    strip(a);
+
+  if (open){
+    h += '<div class="tc__more">' +
+      '<div class="tc__sec"><h4>License<span class="src">from the state record</span></h4>' +
+        'NC license ' + a.license + '. Licensed ' + a.licensed + '. Photo ID matched at sign-up.</div>' +
+      '<div class="tc__sec"><h4>Track record<span class="src">counted by Porch Partner</span></h4>' +
+        (a.covers ? a.covers + ' covers, ' + a.onTime + ' checked in on time, ' + a.cancels + (a.cancels === 1 ? ' cancellation' : ' cancellations') + ' of ' + a.first + '’s own.' : 'Nothing yet.') +
+        ' On time means checked in at least 15 minutes before the start.</div>' +
+      '<div class="tc__sec"><h4>Rating question<span class="src">answered by listing agents</span></h4>' +
+        '<p class="tc__q">“Would you hand them your listing again?”</p>' +
+        (a.answered ? dots(a) + a.yes + ' of ' + a.answered + ' said yes.' : '<p style="margin-top:4px">No answers yet.</p>') + '</div>' +
+      '<div class="tc__sec"><h4>Covered for</h4>' + a.coveredFor + '</div>' +
+      (s4.picked === a.id ? '' :
+        '<button type="button" class="a-btn" data-act="pick" data-id="' + a.id + '" data-k="p-' + a.id + '">' + (s4.picked ? 'Pick ' + a.first + ' instead' : 'Pick ' + a.first) + '</button>') +
+      '</div>';
+  }
+  return h + '</article>';
+}
+
+function s4render(){
+  var h, p;
+  if (s4.phase === 'pick'){
+    h = status('8:15') + '<div class="a-head"><h3>214 Elm St</h3><p>Sat, Nov 21, 1–3 PM. ' + (s4.picked ? 'Covered.' : '3 hands raised.') + '</p></div><div class="a-body">';
+    if (s4.picked){
+      p = AGENTS[s4.picked];
+      var rest = ORDER.filter(function(x){ return x !== s4.picked; }).map(function(x){ return AGENTS[x].first; });
+      h += '<div class="banner"><b>You picked ' + p.first + '</b>' + p.first + ' has been told. ' + rest[0] + ' and ' + rest[1] + ' were asked to stay as backups, in the order they raised a hand.</div>';
+    } else {
+      h += '<p class="a-count" style="padding-top:2px">Pick one. The others can stay as backups.</p>';
+    }
+    h += ORDER.map(function(id){ return trustCard(AGENTS[id]); }).join('');
+    if (s4.picked){
+      h += '<div class="a-card note"><h4>Your handoff note for ' + p.first + '</h4>' +
+        '<p>Lockbox is on the side gate. Alarm is off. The cat stays in the laundry room. If anyone asks about offers, say Dana will call them today.</p>' +
+        '<span class="src">' + p.first + ' can read this now. The lockbox code shows only after check-in.</span></div>';
+    }
+    h += '</div>';
+  } else {
+    p = AGENTS[s4.picked || 'priya'];
+    var covers = p.covers + 1, yes = p.yes + (s4.answer === 'yes' ? 1 : 0), ans = p.answered + 1;
+    h = status('3:10') + '<div class="a-head"><h3>214 Elm St</h3><p>Sat, Nov 21. The open house is over.</p></div><div class="a-body">';
+
+    h += '<div class="a-card"><ul class="tl">' +
+      '<li><time>12:41 PM</time><span>' + p.first + ' checked in at the house, 19 minutes early. License active in this morning’s state record.</span></li>' +
+      '<li><time>1–3 PM</time><span>9 groups signed in.</span></li>' +
+      '</ul></div>';
+
+    h += '<div class="a-card split"><b>The sign-in list: 9 groups</b>' +
+      '<div class="split__bar" aria-hidden="true"><i></i><i class="lead"></i><i></i><i class="lead"></i><i></i><i></i><i class="lead"></i><i></i><i></i></div>' +
+      '<p>All 9 are on your list. The 3 with no agent are also ' + p.first + '’s buyer leads.</p>' +
+      '<button type="button" class="a-link" data-act="list" data-k="list" aria-expanded="' + s4.list + '">' + (s4.list ? 'Hide the sign-in list' : 'Show the sign-in list') + '</button>';
+    if (s4.list){
+      h += '<ul class="sil">' + SIGNIN.map(function(g){
+        return '<li><div class="sil__top"><b>' + g[1] + '</b><span>' + g[0] + '</span></div>' +
+          '<div class="sil__c">' + g[3] + '</div>' +
+          '<div style="margin-top:5px">' + (g[2] ? '<span class="chip chip--none">Has an agent</span>' : '<span class="chip chip--leads">No agent: ' + p.first + '’s buyer lead</span>') + '</div></li>';
+      }).join('') + '</ul>';
+    }
+    h += '</div>';
+
+    h += '<div class="a-card rate">';
+    if (!s4.answer){
+      h += '<h4>One question about ' + p.first + '</h4>' +
+        '<p class="rate__q">Would you hand ' + p.first + ' your listing again?</p>' +
+        '<div class="rate__btns"><button type="button" class="a-btn" data-act="yes" data-k="yes">Yes</button>' +
+        '<button type="button" class="a-btn a-btn--ghost" data-act="no" data-k="no">No</button></div>' +
+        '<p>' + p.first + ' is answering one about you. Neither of you sees the other’s answer until both are in.</p>';
+    } else if (!s4.revealed){
+      h += '<h4>Your answer is in</h4>' +
+        '<p class="rate__q">' + (s4.answer === 'yes' ? 'Yes' : 'No') + ', sealed until ' + p.first + ' answers</p>' +
+        '<p style="margin-top:0">You’ll both see both answers at the same moment. If ' + p.first + ' hasn’t answered in 7 days, yours shows alone.</p>' +
+        '<button type="button" class="a-link" data-act="undo" data-k="undo">Change my answer</button>';
+    } else {
+      h += '<h4>Both answers are in</h4><div class="ans">' +
+        '<div><span class="av av--dana" aria-hidden="true">DR</span><span><b>You: ' + (s4.answer === 'yes' ? 'Yes' : 'No') + '.</b> ' + (s4.answer === 'yes' ? 'You’d hand ' + p.first + ' your listing again.' : 'You wouldn’t hand ' + p.first + ' your listing again.') + '</span></div>' +
+        '<div><span class="av' + p.av + '" aria-hidden="true">' + p.ini + '</span><span><b>' + p.first + ': Yes.</b> ' + p.first + ' would cover for you again.</span></div>' +
+        '</div><p>' + p.first + '’s trust card now reads ' + covers + (covers === 1 ? ' cover, ' : ' covers, ') + (p.onTime + 1) + ' of ' + covers + ' on time, ' + yes + ' of ' + ans + ' said yes. It shows the count, never who said what.</p>';
+    }
+    h += '</div></div>';
+  }
+  paint(s4el, h);
+
+  $$('[data-phase]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-phase') === s4.phase)); });
+  $('#s4-when').textContent = s4.phase === 'pick' ? 'Thu, Nov 19' : 'Sat, Nov 21, 3:10 PM';
+  var waiting = s4.phase === 'after' && s4.answer && !s4.revealed;
+  var who = AGENTS[s4.picked || 'priya'].first;
+  $('#s4-other').hidden = !waiting;
+  $('#s4-other').textContent = 'Now ' + who + ' answers too';
+  var say = $('#s4-say');
+  say.hidden = !(s4.phase === 'after' && !s4.picked);
+  say.textContent = 'Nobody was picked yet, so I picked Priya for Dana.';
+}
+on(s4el, 'click', '[data-act]', function(t){
+  var a = t.getAttribute('data-act'), id = t.getAttribute('data-id');
+  s4el._keep = true;
+  if (a === 'toggle') s4.open = s4.open === id ? null : id;
+  if (a === 'pick'){ s4.picked = id; s4.open = null; s4el._keep = false; }
+  if (a === 'list') s4.list = !s4.list;
+  if (a === 'yes' || a === 'no') s4.answer = a;
+  if (a === 'undo') s4.answer = null;
+  s4render();
+});
+on(document, 'click', '[data-phase]', function(t){ s4.phase = t.getAttribute('data-phase'); s4render(); });
+$('#s4-other').addEventListener('click', function(){ s4.revealed = true; s4render(); });
+$('#s4-reset').addEventListener('click', function(){ s4 = { phase:'pick', open:'priya', picked:null, list:false, answer:null, revealed:false }; s4render(); });
+s4render();
+
+/* =====================================================
+   SCREEN 5  When things go wrong
+   ===================================================== */
+var s5, s5el = $('#s5');
+function s5fresh(what){ return { what:what, stage:0, called:false, choice:null, feeOpen:false, fee:75, feeAdded:false, moveOpen:false, moved:'', hand:false }; }
+s5 = s5fresh('cancel');
+
+var S5 = {
+  cancel:  { when:'Fri, Nov 20, 6:40 PM', clock:'6:40', does:[
+    'Tells Dana at once, with the reason if Priya gave one.',
+    'Offers the cover to Alex, the first backup. If Alex hasn’t said yes within an hour, Tom is offered it and Dana is told.',
+    'Adds a cancellation to Priya’s track record. The cancellations on a trust card are always the covering agent’s own.'] },
+  noshow:  { when:'Sat, Nov 21, 12:45 PM', clock:'12:45', does:[
+    'At 12:45 PM, 15 minutes before the start, alerts Dana and the first backup together.',
+    'Leaves the choice with Dana: call Priya, send Alex, go, or call it off.',
+    'Counts it as a cancellation on Priya’s trust card if someone else has to cover. If Priya arrives after 12:45 and hosts, the cover counts, but not as on time.'] },
+  license: { when:'Fri, Nov 20, 9:00 AM', clock:'9:00', does:[
+    'Reads every agent’s license from the state record each morning.',
+    'Takes the request away from an agent whose license isn’t active, and tells them why.',
+    'Offers the cover to Alex, the first backup, exactly as with a cancellation.'] },
+  nohands: { when:'Thu, Nov 19, 9:00 AM', clock:'9:00', does:[
+    'Tells Dana three days before the open house, while there’s still time to act.',
+    'Says why it may be quiet: 2 groups came last time, so buyer leads are a thin offer on this street.',
+    'Offers three moves: widen, add a fee, or move the open house. This request is already widened, so the fee is the move.'] }
+};
+function alexCard(waitLine){
+  var a = AGENTS.alex;
+  return '<div class="a-card"><p class="a-label">Offered to your first backup</p>' +
+    '<div class="mini"><span class="av av--lg av--alex" aria-hidden="true">AK</span><div><b>Alex Kim</b><span>Dogwood Realty, 5 miles away</span></div></div>' +
+    strip(a) +
+    '<p class="wait"><i></i><span>' + waitLine + '</span></p></div>';
+}
+var WHO = {
+  priya: ['PS', '', 'Priya Shah'], alex: ['AK', ' av--alex', 'Alex Kim'], tom: ['TR', ' av--tom', 'Tom Reyes'], dana: ['DR', ' av--dana', 'You']
+};
+function lineup(label, rows){
+  return '<div class="a-dock"><p class="a-dock__label">' + label + '</p><ul class="lineup">' + rows.map(function(r){
+    var w = WHO[r[0]];
+    return '<li' + (r[3] ? ' class="is-out"' : '') + '><span class="av' + w[1] + '" aria-hidden="true">' + w[0] + '</span><b>' + w[2] + '</b><span class="tag ' + r[1] + '">' + r[2] + '</span></li>';
+  }).join('') + '</ul></div>';
+}
+function s5render(){
+  var c = S5[s5.what], h = status(c.clock), go = $('#s5-other');
+  go.hidden = true;
+
+  if (s5.what === 'cancel' || s5.what === 'license'){
+    h += '<div class="a-head"><h3>214 Elm St</h3><p>Tomorrow, Sat, Nov 21, 1–3 PM</p></div><div class="a-body">';
+    if (s5.stage === 0){
+      h += s5.what === 'cancel'
+        ? '<div class="a-alert a-alert--heads"><span class="a-alert__when">6:40 PM</span><h4>Priya Shah cancelled</h4>Reason given: a family emergency. You don’t need to do anything yet.</div>'
+        : '<div class="a-alert a-alert--heads"><span class="a-alert__when">9:00 AM</span><h4>Priya Shah’s license is no longer active</h4>This morning’s state record lists it as not active. Priya can’t cover 214 Elm St and has been told why. You don’t need to do anything yet.</div>';
+      h += alexCard(s5.what === 'cancel'
+        ? 'Waiting for Alex to say yes. With no answer by 7:40 PM, Tom Reyes is offered it and you’re told.'
+        : 'Waiting for Alex to say yes. With no answer by 10:00 AM, Tom Reyes is offered it and you’re told.');
+      h += '</div>' + lineup('Who covers 214 Elm St', [
+        ['priya', 'tag--bad', s5.what === 'cancel' ? 'Cancelled' : 'License not active', true],
+        ['alex', 'tag--wait', 'Offered the cover'],
+        ['tom', 'tag--backup', 'Backup 2']]);
+      go.hidden = false; go.textContent = 'Alex says yes';
+    } else {
+      h += '<div class="a-alert a-alert--good"><span class="a-alert__when">' + (s5.what === 'cancel' ? '6:52 PM' : '9:14 AM') + '</span><h4>Alex Kim is covering 214 Elm St</h4>Alex said yes 12 minutes after being offered it.</div>' +
+        '<div class="a-card"><ul class="ticks">' +
+        '<li>' + ICON.check + '<span>Alex’s license is active in this morning’s state record.</span></li>' +
+        '<li>' + ICON.check + '<span>Alex has your handoff note. The lockbox code shows when Alex checks in.</span></li>' +
+        '<li>' + ICON.check + '<span>Tom Reyes is now your first backup.</span></li>' +
+        (s5.what === 'cancel'
+          ? '<li class="dot"><span>Priya’s trust card now shows 1 cancellation.</span></li>'
+          : '<li class="dot"><span>Priya can raise a hand again once the state record shows an active license.</span></li>') +
+        '</ul></div></div>' + lineup('Who covers 214 Elm St', [['alex', 'tag--ok', 'Covering'], ['tom', 'tag--backup', 'Backup 1']]);
+    }
+  }
+
+  else if (s5.what === 'noshow'){
+    h += '<div class="a-head"><h3>214 Elm St</h3><p>Today, 1–3 PM</p></div><div class="a-body">';
+    if (!s5.choice){
+      h += '<div class="a-alert a-alert--urgent"><span class="a-alert__when">12:45 PM</span><h4>No check-in from Priya</h4>Your open house starts in 15 minutes. Priya was due to check in at the house by now.</div>' +
+        '<p class="a-count">' + (s5.called ? 'You called Priya at 12:46 PM. No answer. ' : '') + 'Alex Kim, your first backup, got this alert too and is 12 minutes from the house.</p>' +
+        '<div class="choices">' +
+        '<button type="button" class="choice" data-act="call" data-k="call"><b>Call Priya</b><span>' + (s5.called ? 'Try once more' : 'It may only be parking') + '</span></button>' +
+        '<button type="button" class="choice" data-act="send" data-k="send"><b>Send Alex</b><span>There by about 12:58 PM</span></button>' +
+        '<button type="button" class="choice" data-act="self" data-k="self"><b>Go myself</b><span>You’re 25 minutes away</span></button>' +
+        '<button type="button" class="choice" data-act="off" data-k="off"><b>Call it off</b><span>Nobody opens the door</span></button>' +
+        '</div>';
+    } else if (s5.choice === 'send'){
+      h += '<div class="a-alert a-alert--good"><span class="a-alert__when">12:46 PM</span><h4>Alex Kim is on the way</h4>Due at 214 Elm St by about 12:58 PM.</div>' +
+        '<div class="a-card"><ul class="ticks">' +
+        '<li>' + ICON.check + '<span>Alex has your handoff note. The lockbox code shows when Alex checks in.</span></li>' +
+        '<li>' + ICON.check + '<span>The offer moves with the cover: Alex keeps the buyer leads.</span></li>' +
+        '<li>' + ICON.check + '<span>Priya has been told the cover went to Alex.</span></li>' +
+        '<li class="dot"><span>It counts as a cancellation on Priya’s trust card.</span></li>' +
+        '</ul></div>';
+    } else if (s5.choice === 'self'){
+      h += '<div class="a-alert a-alert--good"><span class="a-alert__when">12:46 PM</span><h4>You’re covering 214 Elm St</h4>Leave now and you’re there by about 1:10 PM.</div>' +
+        '<div class="a-card"><ul class="ticks">' +
+        '<li>' + ICON.check + '<span>Priya and Alex have been told they’re not needed.</span></li>' +
+        '<li>' + ICON.check + '<span>The sign-in list is open on your phone, and every visitor is yours.</span></li>' +
+        '<li class="dot"><span>It counts as a cancellation on Priya’s trust card.</span></li>' +
+        '</ul></div>';
+    } else {
+      h += '<div class="a-alert a-alert--heads"><span class="a-alert__when">12:46 PM</span><h4>Open house called off</h4>Priya and Alex have been told.</div>' +
+        '<div class="a-card"><p class="a-label">Still yours to do</p><ul class="ticks">' +
+        '<li class="dot"><span>Tell your seller.</span></li>' +
+        '<li class="dot"><span>Take today’s open house off the listing. Porch Partner can’t do that for you.</span></li>' +
+        '</ul></div>' +
+        '<div class="a-card"><ul class="ticks"><li class="dot"><span>It counts as a cancellation on Priya’s trust card.</span></li></ul></div>';
+    }
+    h += '</div>';
+    if (!s5.choice) h += lineup('Who covers 214 Elm St', [['priya', 'tag--bad', 'No check-in'], ['alex', 'tag--wait', 'Alerted, 12 min away'], ['tom', 'tag--backup', 'Backup 2']]);
+    else if (s5.choice === 'send') h += lineup('Who covers 214 Elm St', [['alex', 'tag--ok', 'On the way'], ['tom', 'tag--backup', 'Backup 1'], ['priya', 'tag--bad', 'No check-in', true]]);
+    else if (s5.choice === 'self') h += lineup('Who covers 214 Elm St', [['dana', 'tag--ok', 'Covering'], ['priya', 'tag--bad', 'No check-in', true]]);
+  }
+
+  else { /* nohands */
+    var dateLine = s5.moved ? s5.moved : 'Sun, Nov 22, 1–3 PM';
+    h += '<div class="a-head"><h3>9 Birch Ct</h3><p>' + dateLine + '</p></div><div class="a-body">';
+    if (s5.hand){
+      h += '<div class="a-alert a-alert--good"><span class="a-alert__when">9:44 AM</span><h4>Priya Shah raised a hand</h4>40 minutes after you added the fee.</div>' +
+        '<div class="a-card"><div class="mini"><span class="av av--lg" aria-hidden="true">PS</span><div><b>Priya Shah</b><span>Queen City Homes, 4 miles away</span></div></div>' +
+        '<p class="tc__lic" style="margin:10px 0 0">' + ICON.check + '<span><b>License active.</b> Checked against the state record today.</span></p>' +
+        strip(AGENTS.priya) + '</div>' +
+        '<div class="a-card"><p class="a-label">The request now</p><div class="req__offer" style="margin-top:0">' + offerChips(true, s5.fee, 'Dana') + '</div>' +
+        '<p class="a-help">Pick Priya, or wait to see who else raises a hand.</p></div>';
+    } else if (s5.feeAdded){
+      h += '<div class="a-alert a-alert--good"><span class="a-alert__when">9:04 AM</span><h4>Fee added: $' + s5.fee + '</h4>The offer is now buyer leads and a $' + s5.fee + ' fee. The 31 agents who saw the request have been told it changed.</div>' +
+        '<div class="a-card"><p class="a-label">The request now</p><div class="req__offer" style="margin-top:0">' + offerChips(true, s5.fee, 'Dana') + '</div>' +
+        '<p class="wait"><i></i><span>No raised hand yet. You’ll hear as soon as there is one.</span></p></div>';
+      go.hidden = false; go.textContent = '40 minutes pass';
+    } else if (s5.moved){
+      h += '<div class="a-alert a-alert--good"><span class="a-alert__when">9:04 AM</span><h4>Open house moved</h4>Now ' + s5.moved + ', with the same offer. The 31 agents who saw the request have been told the new time.</div>' +
+        '<div class="a-card"><ul class="ticks"><li class="dot"><span>Still yours to do: tell your seller and change the time on the listing.</span></li></ul></div>';
+    } else {
+      h += '<div class="a-alert a-alert--heads"><span class="a-alert__when">9:00 AM, 3 days to go</span><h4>No one has raised a hand yet</h4>Posted Tuesday. Seen by 31 agents: your 13 colleagues and 18 verified agents nearby.</div>' +
+        '<p class="a-count">Why it may be quiet: 2 groups came to your last open house here, so buyer leads are a thin offer.</p>' +
+        '<div class="moves">' +
+        '<div class="move is-done"><div class="move__top"><div class="move__t">Widen<span>Done on Tuesday. Any verified agent nearby can see it.</span></div>' + ICON.check + '</div></div>' +
+        '<div class="move"><div class="move__top"><div class="move__t">Add a fee<span>On top of the buyer leads</span></div>' +
+          (s5.feeOpen ? '' : '<button type="button" class="a-btn" data-act="feeopen" data-k="fee">Add a fee</button>') + '</div>' +
+          (s5.feeOpen ? '<div class="move__open"><div class="a-fee__top"><label for="s5-fee">Fee</label><output id="s5-fee-out">$' + s5.fee + '</output></div>' +
+            '<input class="rng" type="range" id="s5-fee" data-k="fee" min="5" max="200" step="5" value="' + s5.fee + '" style="--p:' + ((s5.fee - 5) / 195 * 100) + '%">' +
+            '<button type="button" class="a-btn" data-act="feeadd" data-k="feeadd" id="s5-fee-btn">Add $' + s5.fee + ' fee</button></div>' : '') +
+        '</div>' +
+        '<div class="move"><div class="move__top"><div class="move__t">Move the open house<span>To a day more agents are free</span></div>' +
+          (s5.moveOpen ? '' : '<button type="button" class="a-btn a-btn--ghost" data-act="moveopen" data-k="move">Move it</button>') + '</div>' +
+          (s5.moveOpen ? '<div class="move__open">' +
+            '<button type="button" class="a-btn a-btn--ghost" data-act="moveto" data-to="Sat, Nov 28, 1–3 PM" data-k="move">Sat, Nov 28, 1–3 PM</button>' +
+            '<button type="button" class="a-btn a-btn--ghost" data-act="moveto" data-to="Sun, Nov 29, 1–3 PM" data-k="move2">Sun, Nov 29, 1–3 PM</button></div>' : '') +
+        '</div></div>';
+    }
+    h += '</div>';
+  }
+
+  paint(s5el, h);
+  $('#s5-when').textContent = c.when;
+  $('#s5-does').innerHTML = c.does.map(function(d){ return '<li>' + d + '</li>'; }).join('');
+}
+on(s5el, 'click', '[data-act]', function(t){
+  var a = t.getAttribute('data-act');
+  if (a === 'call') s5.called = true;
+  if (a === 'send' || a === 'self' || a === 'off') s5.choice = a;
+  if (a === 'feeopen'){ s5.feeOpen = true; s5.moveOpen = false; }
+  if (a === 'feeadd') s5.feeAdded = true;
+  if (a === 'moveopen'){ s5.moveOpen = true; s5.feeOpen = false; }
+  if (a === 'moveto') s5.moved = t.getAttribute('data-to');
+  s5render();
+});
+on(s5el, 'input', '#s5-fee', function(t){
+  s5.fee = +t.value;
+  t.style.setProperty('--p', ((s5.fee - 5) / 195 * 100) + '%');
+  $('#s5-fee-out').textContent = '$' + s5.fee;
+  $('#s5-fee-btn').textContent = 'Add $' + s5.fee + ' fee';
+});
+$('#s5-what').addEventListener('change', function(){ s5 = s5fresh(this.value); s5render(); });
+$('#s5-other').addEventListener('click', function(){
+  if (s5.what === 'nohands') s5.hand = true; else s5.stage = 1;
+  s5render();
+});
+$('#s5-reset').addEventListener('click', function(){ s5 = s5fresh(s5.what); s5render(); });
+s5render();
+
+/* =====================================================
+   Assumptions
+   ===================================================== */
+var L = {
+  trec676: '<a href="https://www.trec.texas.gov/node/676" target="_blank" rel="noopener">Texas Real Estate Commission</a>',
+  trec454: '<a href="https://www.trec.texas.gov/node/454" target="_blank" rel="noopener">Texas Real Estate Commission</a>',
+  ncrec: '<a href="https://bulletins.ncrec.gov/getting-agency-representation-correct-clarifying-the-practice-of-seller-subagency" target="_blank" rel="noopener">NC Real Estate Commission bulletin, April 2021</a>',
+  ncr: '<a href="https://www.ncrealtors.org/question/can-an-agent-from-my-firm-host-an-open-house-when-the-listing-is-with-another-firm" target="_blank" rel="noopener">NC REALTORS Legal Q&amp;A, Aug 21, 2025</a>',
+  sc: '<a href="https://www.llr.sc.gov/re/News/Same%20Brokerage%20Different%20BICs%20-%20FINAL.pdf" target="_blank" rel="noopener">SC Real Estate Commission guidance, Nov 20, 2025</a>',
+  ca: '<a href="https://dre.ca.gov/newsroom/DRE_Updates/2025_06_12_Understanding_Open_House_Broker_Sittings.html" target="_blank" rel="noopener">CA Department of Real Estate, June 12, 2025</a>',
+  hs: '<a href="https://blog.homespotter.com/2020/02/19/how-to-host-an-open-house-for-another-agent/" target="_blank" rel="noopener">HomeSpotter, Feb 2020</a>',
+  ar: '<a href="https://activerain.com/questions/show/75214/does-anyone-charge-to-just-show-a-home-for-another-agent--if-so-what-is-the-going-rate-" target="_blank" rel="noopener">ActiveRain thread</a>',
+  nar: '<a href="https://www.nar.realtor/the-facts/consumer-guide-to-open-houses-and-written-agreements" target="_blank" rel="noopener">NAR consumer guide, Aug 17, 2024</a>',
+  ncs: '<a href="https://license.ncrec.gov/ncrec/oecgi3.exe/O4W_LIC_SEARCH_NEW" target="_blank" rel="noopener">NC Real Estate Commission licensee search</a>',
+  nco: '<a href="https://www.ncrec.gov/OrderForm" target="_blank" rel="noopener">NC Real Estate Commission order form</a>',
+  inf: '<a href="https://www.informs.org/News-Room/INFORMS-Releases/News-Releases/Five-Star-Rating-New-Research-Finds-It-May-Not-Reflect-What-Consumers-Receive" target="_blank" rel="noopener">Filippas, Horton and Golden, Marketing Science 2022</a>'
+};
+var GROUPS = { 1:'Decision 1. Who may cover', 2:'Decision 2. What the covering agent gets', 3:'Decision 3. License check, trust and ratings', 4:'Decision 4. Matching, and when things go wrong' };
+var A = [
+  ['1.1','u','The brief means agents from other brokerages can cover, not only colleagues.','Inferred from “someone they’ve never met” and the ask for license checks.','Same brokerage only becomes enough, and the trust and license work shrinks.'],
+  ['1.2','t','Hosting an open house needs a license; an unlicensed assistant can’t host alone.','Texas, Michigan and New Jersey, from a search summary. Pages not read. ' + L.trec676,'The license check matters less.'],
+  ['1.3','p','North Carolina lets an outside agent host only as the seller’s agent, with the seller’s written, signed permission.',L.ncrec + ' and ' + L.ncr,'Widening has no example state.'],
+  ['1.4','p','The seller’s permission can sit in the listing agreement, so it’s collected once per listing.','For North Carolina. ' + L.ncrec,'The seller must sign for each request, and last-minute requests get slower.'],
+  ['1.5','p','South Carolina bars hosting for another brokerage, and for another broker-in-charge inside the same brokerage.',L.sc,'No need to gate by state there.'],
+  ['1.6','p','California doesn’t ban outside agents, but its regulator advises against them.',L.ca,'California could start open instead of closed.'],
+  ['1.7','u','Rules differ in the other 47 states, so each starts closed until read.','Only three states read.','If most states allow it, open by default is simpler.'],
+  ['1.8','u','A listing agent prefers a free colleague to someone they’ve never met, which is why colleagues see a request first.','A guess. No agent interviews.','Drop the head start and show everyone at once where lawful.'],
+  ['1.9','u','Often no colleague is free, so outside agents are needed.','The brief says agents “hope a colleague is free”.','Same brokerage only would be enough.'],
+  ['1.10','u','The service is for the US, and no state is fixed.','The brief names no market.','The state rules change.'],
+  ['2.1','t','The agents who need cover and the agents who’d cover are mostly different people.','One industry guide, no agent interviews. ' + L.hs,'Favor credits become workable, since the same people give and take.'],
+  ['2.2','p','Agents who host for others keep visitors’ details to build their own client base, and usually expect no fee when they can pick up buyers.','One industry guide, quoting one agent on fees. ' + L.hs,'A fee should be the default and leads the extra.'],
+  ['2.3','t','Fees for this today are small and irregular, roughly $25 to $100.','Search summary of forum posts. ' + L.ar,'The slider range and the $75 example change.'],
+  ['2.4','p','A covering agent needn’t sign written agreements with open-house visitors, only once they start working with that buyer.',L.nar,'Collecting leads at the door gets slower and may need a form.'],
+  ['2.5','p','A fee for hosting must reach the agent through their own broker.','Proved for South Carolina and Texas, not for North Carolina or elsewhere. ' + L.sc + ', ' + L.trec454,'Where paying an agent directly is lawful, that would be simpler.'],
+  ['2.6','p','In North Carolina a covering agent needs the seller’s permission before representing a buyer they met at the open house.',L.ncrec,'Leads could be kept with no extra line in the seller’s signed OK.'],
+  ['2.7','u','The seller’s signed OK can carry that permission, so leads work for outside agents too.','Inferred from 2.6.','For outside agents, leads need a second sign-off or fall back to a fee only.'],
+  ['2.8','u','Listing agents will give up the visitors with no agent, because they’re too busy to follow up.','A guess.','Leads must be a choice on each request, not the default.'],
+  ['2.9','p','The fee and who keeps the leads should be agreed in writing before the open house, which is why the offer sits on the request.','One industry guide. ' + L.hs,'The offer could be settled in chat afterwards, and the request screen gets simpler.'],
+  ['3.1','p','The state commission publishes a searchable record of licensed agents.','For North Carolina: anyone can search by license number or name, with no login. ' + L.ncs,'The license check falls back to an uploaded license or a broker’s confirmation.'],
+  ['3.2','p','That record shows status and brokerage, and software may re-read it every day.','For North Carolina: the Commission sells its licensee data as files updated daily, $250 a year. I haven’t read the file layout. ' + L.nco,'Re-checks turn manual or rarer, and “checked today” goes.'],
+  ['3.3','t','Star averages inflate until they stop telling people apart.','Shown for one online labor marketplace, from a search summary. Unproved for agents. ' + L.inf,'Stars would do, and are more familiar.'],
+  ['3.4','u','One yes-or-no question inflates less than stars and still tells people apart.','My reasoning.','Add a second question, or tags.'],
+  ['3.5','u','Showing both answers together stops tit-for-tat answers.','My reasoning. Other marketplaces are said to do this; I haven’t checked.','Answers could show at once.'],
+  ['3.6','u','Listing agents trust facts the service checks or measures more than other people’s opinions.','No agent interviews.','Lead the card with ratings instead.'],
+  ['3.7','u','Covering agents are fine with checking in by location at the house.','A guess.','“On time” must come from the listing agent’s say-so.'],
+  ['3.8','p','A license number alone doesn’t prove who is signing up, so identity needs its own check.','License numbers are public in North Carolina: the Commission’s search takes one and its licensee list prints them. ' + L.nco,'Sign-up is one step shorter.'],
+  ['3.9','u','New agents can build a record inside their own brokerage first.','Follows from decision 1.','New agents need another way in, such as a broker vouching for them.'],
+  ['3.10','u','A photo ID whose name matches the license is enough to tie an account to the licensed agent.','The Commission’s licensee list has no photo or birth date, so a name is all I can compare. Someone who shares the name could pass.','Add a code sent to the email on the Commission’s record, or have the agent’s broker-in-charge confirm.'],
+  ['3.11','u','The state record carries the date a license was first issued.','Not found in the fields of the Commission’s licensee list. I haven’t read the daily file’s layout.','“Licensed 3 years” comes off the trust card, and the record’s level (provisional broker or broker) stands in.'],
+  ['4.1','u','Listing agents want to choose who covers their listing, not have someone chosen for them.','Follows from the brief’s trust question. No agent interviews.','First to say yes is faster and simpler.'],
+  ['4.2','u','Picking from trust cards takes seconds, so the delay is small.','A guess.','Lean harder on marking trusted agents, whose raised hand is picked at once.'],
+  ['4.3','u','Agents who raised a hand and weren’t picked will agree to wait as backups.','A guess.','A cancellation falls back to posting the request again.'],
+  ['4.4','u','Cancellations and no-shows are the failures that matter most.','My reasoning.','Design effort belongs on damage, safety or disputes instead.'],
+  ['4.5','u','A check-in due 15 minutes before the start leaves enough time to react.','A guess.','Make it 30 minutes, or add a “leaving now” tap.']
+];
+var ST = { p:['st--p','Read in a source'], t:['st--t','Thin'], u:['st--u','Unproved'] };
+(function(){
+  var rows = '', last = '';
+  A.forEach(function(a){
+    var g = a[0].split('.')[0];
+    if (g !== last){ rows += '<tr class="grp"><td colspan="4">' + GROUPS[g] + '</td></tr>'; last = g; }
+    rows += '<tr><td>' + a[0] + '</td><td>' + a[2] + '</td><td><span class="st ' + ST[a[1]][0] + '">' + ST[a[1]][1] + '</span><br>' + a[3] + '</td><td data-l="If I’m wrong:">' + a[4] + '</td></tr>';
+  });
+  $('#atable').innerHTML = rows;
+  var bar = '';
+  ['p','t','u'].forEach(function(k){ A.forEach(function(a){ if (a[1] === k) bar += '<i class="' + k + '"></i>'; }); });
+  $('#tally').innerHTML = bar;
+})();
+
+/* ---------- in-page links: scroll here, so they also work where the browser blocks hash navigation ---------- */
+document.addEventListener('click', function(e){
+  if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+  if (!a) return;
+  var id = a.getAttribute('href').slice(1);
+  var t = id ? document.getElementById(id) : null;
+  if (!t) return;
+  e.preventDefault();
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (id === 'top') window.scrollTo({ top:0, behavior: calm ? 'auto' : 'smooth' });
+  else t.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block:'start' });
+  try { history.replaceState(null, '', '#' + id); } catch (err) {}
+  if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+  t.focus({ preventScroll:true });
+});
+
+/* ---------- nav: mark the section in view ---------- */
+(function(){
+  var links = $$('.nav a'), map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  if (!('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ seen[e.target.id] = e.isIntersecting; });
+    var cur = null;
+    Object.keys(map).forEach(function(id){ if (seen[id]) cur = cur || id; });
+    links.forEach(function(a){ a.removeAttribute('aria-current'); });
+    if (!cur) $('.nav').scrollLeft = 0;
+    if (cur){
+      map[cur].setAttribute('aria-current', 'true');
+      var nav = $('.nav'), l = map[cur];
+      if (nav.scrollWidth > nav.clientWidth) nav.scrollLeft = l.offsetLeft - nav.offsetLeft - 16;
+    }
+  }, { rootMargin:'-45% 0px -50% 0px' });
+  Object.keys(map).forEach(function(id){ var s = document.getElementById(id); if (s) io.observe(s); });
+})();
+
+})();
+</script>
+</body>
+</html>
