@@ -24,6 +24,7 @@
   --brick:#B03A2A;      /* porch steps: something needs you */
   --brick-lt:#F9E5E0;
   --ok:#1C7C54;
+  --star:#E2A51C;
   --ok-lt:#DDF1E6;
   --line:#D3E2DE;
   --serif:"Besley","Rockwell","Roboto Slab",Georgia,serif;
@@ -304,22 +305,30 @@ h1{font:600 clamp(2.45rem,5.3vw,4.35rem)/1.03 var(--serif);letter-spacing:-.02em
 .tc__who span{display:block;font-size:13px;color:var(--ink-2);margin-top:1px}
 .tc__chev{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#EDF4F2;transition:transform .18s}
 .tc.is-open .tc__chev{transform:rotate(180deg)}
-.tc__lic{display:flex;gap:7px;align-items:flex-start;margin:10px 14px 0;font-size:13px;line-height:1.35}
-.tc__lic svg{flex:none;margin-top:1px;color:var(--ok)}
-.tc__lic b{font-weight:700}
-.tc__strip{display:grid;grid-template-columns:.8fr 1.15fr 1fr 1.15fr;margin:12px 14px 14px;border-top:1px solid var(--line);padding-top:10px}
-.tc__strip > div{display:flex;flex-direction:column-reverse;padding-right:4px}
-.tc__strip dt{font-size:12px;color:var(--ink-2);margin-top:1px}
-.tc__strip dd{font:600 18px/1.15 var(--serif);white-space:nowrap}
+.a-lic{display:flex;gap:7px;align-items:flex-start;margin:0 2px 10px;font-size:13px;line-height:1.35}
+.a-lic svg{flex:none;margin-top:1px;color:var(--ok)}
+.a-lic b{font-weight:700}
+/* the front of a trust card: stars, how many ratings, who they've covered for */
+.sum{margin:12px 14px 14px;border-top:1px solid var(--line);padding-top:11px;font-size:13px;line-height:1.35}
+.sum__stars{display:flex;align-items:center;gap:7px}
+.sum__stars b{font:600 17px/1 var(--serif)}
+.sum__n,.sum__none,.sum__for{color:var(--ink-2)}
+.sum__for{margin-top:6px}
+.sum__for b{font-weight:600;color:var(--ink)}
+.stars{position:relative;display:inline-flex;flex:none}
+.stars__off,.stars__on{display:flex;gap:2px}
+.stars__off{color:#DCE6E3}
+.stars__on{position:absolute;left:0;top:0;overflow:hidden;color:var(--star)}
+.stars svg{flex:none;display:block}
+.hist{display:grid;grid-template-columns:auto 1fr auto;gap:4px 8px;align-items:center;margin:6px 0 7px;font-size:12px;line-height:1;color:var(--ink-2)}
+.hist i{height:6px;border-radius:3px;background:#E6EFEC;overflow:hidden}
+.hist i b{display:block;height:100%;border-radius:3px;background:var(--star)}
+.tc__sec .warn{font-weight:700;color:#7A2114}
 .tc__new{margin:12px 14px 14px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-2)}
 .tc__more{padding:0 14px 14px}
 .tc__sec{padding:11px 0;border-top:1px solid var(--line);font-size:13.5px;line-height:1.4}
 .tc__sec h4{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:700 13px/1.3 var(--sans);margin-bottom:3px}
 .tc__sec h4 .src{font-weight:400;text-align:right}
-.tc__q{font:italic 500 14.5px/1.3 var(--serif)}
-.dots{display:flex;flex-wrap:wrap;gap:4px;margin:7px 0 5px}
-.dots i{width:13px;height:13px;border-radius:50%;background:var(--ok)}
-.dots i.no{background:transparent;box-shadow:inset 0 0 0 1.5px var(--brick)}
 .tc__more .a-btn{margin-top:6px}
 .banner{background:var(--light-lt);border-radius:14px;padding:11px 13px;font-size:13.5px;line-height:1.4;margin-bottom:10px;color:#3F2C00}
 .banner b{display:block;font-size:15px;color:var(--ink)}
@@ -344,8 +353,11 @@ h1{font:600 clamp(2.45rem,5.3vw,4.35rem)/1.03 var(--serif);letter-spacing:-.02em
 .rate{background:var(--light-lt)}
 .rate h4{font:700 13px/1.3 var(--sans);color:#553A00}
 .rate__q{font:600 19px/1.22 var(--serif);margin:5px 0 12px}
-.rate__btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.rate__btns .a-btn{margin:0}
+.rate__stars{display:flex;gap:5px;margin:2px 0 12px}
+.rstar{flex:none;display:grid;place-items:center;width:46px;height:46px;border:0;border-radius:12px;background:#fff;color:#DDD3AE;cursor:pointer}
+.rstar.is-on{color:var(--star)}
+.rstar svg{width:28px;height:28px}
+.rate__sent{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .rate p{font-size:13px;line-height:1.4;margin-top:10px;color:#3F2C00}
 .ans{display:grid;gap:6px;margin:8px 0 2px}
 .ans div{display:flex;gap:9px;align-items:center;background:#fff;border-radius:11px;padding:8px 10px;font-size:13.5px;line-height:1.3}
@@ -364,7 +376,9 @@ h1{font:600 clamp(2.45rem,5.3vw,4.35rem)/1.03 var(--serif);letter-spacing:-.02em
 .mini{display:flex;align-items:center;gap:10px}
 .mini b{display:block;font:600 16px/1.2 var(--serif)}
 .mini div span{display:block;font-size:12.5px;color:var(--ink-2)}
-.a-card .tc__strip{margin:11px 0 0}
+.a-card .sum{margin:11px 0 0}
+.rate__card{margin-top:10px;padding:12px;border-radius:12px;background:#fff}
+.rate__card .sum{margin:0;padding-top:0;border-top:0}
 .wait{display:flex;gap:9px;align-items:flex-start;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:13px;line-height:1.4}
 .wait i{flex:none;width:10px;height:10px;margin-top:4px;border-radius:50%;background:var(--light);box-shadow:0 0 0 3px var(--light-lt);animation:pulse 1.4s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.35}}
@@ -628,11 +642,11 @@ footer b{font:600 1.05rem/1.3 var(--serif);color:#fff}
       <li class="dec__item">
         <div class="dec__q"><span class="dec__n">3</span>Why trust them</div>
         <div class="dec__a">
-          <h3>A trust card of checked facts, with one question and no stars</h3>
-          <p>The license is read from the state record every morning, not once at sign-up. Porch Partner counts the track record itself: covers, on-time check-ins, cancellations. After each open house both sides answer one yes-or-no question, and the two answers appear together.</p>
+          <h3>A trust card: stars up front, checked facts inside</h3>
+          <p>The license is read from the state record every morning, not once at sign-up. After each open house both sides rate each other from 1 to 5 stars, and the two ratings appear together. The card shows the average, how many ratings are behind it, and whether the agent has covered for you or your colleagues. Inside, Porch Partner counts the track record itself: covers, on-time check-ins, late cancellations.</p>
         </div>
         <div class="dec__side">
-          <p><b>Instead of</b> a one-time license check with five-star ratings and written reviews, or a hand-picked network.</p>
+          <p><b>Instead of</b> a license checked once at sign-up, written reviews, or a hand-picked network.</p>
           <p><a href="#screen-1">Screen 1</a> and <a href="#screen-4">screen 4</a></p>
         </div>
       </li>
@@ -668,7 +682,7 @@ footer b{font:600 1.05rem/1.3 var(--serif);color:#fff}
           <li>Picking from trust cards, with backups</li>
           <li>Check-in at the house</li>
           <li>The sign-in list, with buyer leads split out</li>
-          <li>The rating question, both ways</li>
+          <li>Star ratings, both ways</li>
           <li>Alerts for a cancellation and a no-show</li>
         </ul>
       </div>
@@ -834,13 +848,14 @@ footer b{font:600 1.05rem/1.3 var(--serif);color:#fff}
     <div class="screen__text">
       <span class="plaque" aria-hidden="true">4</span>
       <h2><span class="vh">Screen 4: </span>Pick from trust cards, then rate</h2>
-      <p>Three agents raised a hand for 214 Elm St. Dana has never met any of them. Each has a trust card, and every line on it says where it came from: the state record, Porch Partner’s own count, or other listing agents.</p>
-      <p><b>The decision.</b> Facts first. The license line is read from the state record today. The track record is counted by Porch Partner. The only opinion is one yes-or-no question. I show counts, never percentages or stars: 7 of 7 and 12 of 12 are different amounts of evidence, and a 4.8 hides both.</p>
+      <p>Three agents raised a hand for 214 Elm St. Dana has never met any of them. Each has a trust card. Closed, it shows a star rating, the number of ratings behind it, and who the agent has covered for. Open, every line says where it came from: Porch Partner’s own count, other listing agents, or the state record.</p>
+      <p><b>The decision.</b> The closed card answers what one agent asks another about a stranger: how did they do, and has anyone I know used them. So it shows the stars, the number of ratings, and who they’ve covered for: you first, then your colleagues by name. I use stars because every agent reads them without being taught, and one line works for 7 ratings or 700. The facts Porch Partner counts are inside the card: covers, on-time check-ins, late cancellations. Dana can’t pick without opening it.</p>
+      <p><b>The license.</b> It isn’t on the cards. Only an agent whose license is active in today’s state record can raise a hand, so the line would say the same thing three times. The screen says it once, above the cards, and each open card has the license number.</p>
       <p><b>Picking.</b> Dana picks one, and the others are asked to stay as backups in the order they raised a hand. Dana can mark colleagues and agents who’ve covered before, so their raised hand is picked at once.</p>
       <p><b>On the day.</b> The picked agent checks in at the house, by location, at least 15 minutes before the start. The lockbox code shows only then. Every group that visits goes on the sign-in list. The whole list goes to Dana; the groups with no agent are the covering agent’s buyer leads.</p>
-      <p><b>Rating.</b> Afterwards each side answers one question about the other. Neither sees the other’s answer until both are in, so nobody answers to get even.</p>
-      <p><b>The tradeoff.</b> A yes or a no loses nuance, and a new agent’s card is nearly empty. I’d rather a card say New than show three stars from nobody. New agents get their first covers inside their own brokerage, where colleagues already know them. That star averages inflate is shown for one online marketplace, not for agents, and that one question does better is my own reasoning.</p>
-      <p class="try">Try it: open each card and pick someone. Then use the dashed box to jump to after the open house.</p>
+      <p><b>Rating.</b> Afterwards each side gives the other 1 to 5 stars. Neither sees the other’s rating until both are in, so nobody rates to get even.</p>
+      <p><b>The tradeoff.</b> Star averages creep up until everyone is a 4.8. That is shown for one online marketplace, not for agents. The count beside the stars and the late cancellations inside the card are what I’m relying on to keep a 4.8 honest. A card shows no average until it has 3 ratings, so a new agent’s card is nearly empty. I’d rather it say New than show 5.0 from one person. New agents get their first covers inside their own brokerage, where colleagues already know them. One late cancellation stays inside the card. A run of recent ones should go on the front, and I haven’t set that rule.</p>
+      <p class="try">Try it: open each card and pick someone. Then use the dashed box to jump to after the open house, and rate.</p>
     </div>
     <div class="stage">
       <div class="whose"><i></i><span><b>Dana Ruiz</b>, listing agent</span><span class="whose__when" id="s4-when">Thu, Nov 19</span></div>
@@ -870,7 +885,7 @@ footer b{font:600 1.05rem/1.3 var(--serif);color:#fff}
         <h4 id="s5-does-h">What Porch Partner does</h4>
         <ul id="s5-does"></ul>
       </div>
-      <p><b>It cuts both ways.</b> A listing agent who cancels inside 24 hours still owes any fee.</p>
+      <p><b>24 hours, both ways.</b> A covering agent who cancels with more than 24 hours to go loses nothing. Inside 24 hours it goes on their track record as a late cancellation, whatever the reason, because Porch Partner can’t check reasons. That counts a real emergency too. A listing agent who cancels inside 24 hours still owes any fee.</p>
       <p><b>What I haven’t designed.</b> Damage to the home, safety at the door, and two agents disagreeing over who met a buyer first. I’m assuming cancellations and no-shows matter most. No agent has told me so.</p>
       <p class="try">Try it: choose what goes wrong in the dashed box, then make Dana’s choice inside the phone.</p>
     </div>
@@ -921,7 +936,7 @@ footer b{font:600 1.05rem/1.3 var(--serif);color:#fff}
         <li><p>Agents who raised a hand and weren’t picked will agree to wait as backups.</p><p>A cancellation falls back to posting the request again.</p></li>
         <li><p>The seller’s signed OK can also let the covering agent work with buyers met at the open house.</p><p>For outside agents, leads need a second sign-off or the offer falls back to a fee.</p></li>
         <li><p>Covering agents are fine with checking in by location.</p><p>“On time” has to come from the listing agent’s say-so.</p></li>
-        <li><p>One yes-or-no question inflates less than stars and still tells agents apart.</p><p>Add a second question, or tags.</p></li>
+        <li><p>The number of ratings and the late cancellations inside the card keep a star average useful, even if averages creep up.</p><p>Ask one sharper question beside the stars, such as whether they’d hand over their listing again.</p></li>
       </ul>
 
       <details class="all">
@@ -1023,28 +1038,51 @@ function status(t){ return '<div class="a-status"><span>' + t + '</span>' + BARS
 
 /* ---------- made-up people ---------- */
 var AGENTS = {
+  /* stars: how many listing agents gave 1, 2, 3, 4 and 5 */
   priya: { id:'priya', name:'Priya Shah', first:'Priya', ini:'PS', av:'', brokerage:'Queen City Homes', miles:2, licensed:'14 months', license:'312045',
-           covers:7, onTime:7, cancels:0, yes:7, answered:7, coveredFor:'Marcus Bell and Jo Lin, your colleagues at Harbor Realty' },
+           covers:7, onTime:7, cancels:0, stars:[0,0,0,1,6], colleagues:['Marcus Bell','Jo Lin'], coveredFor:'Marcus Bell and Jo Lin, your colleagues at Harbor Realty' },
   alex:  { id:'alex', name:'Alex Kim', first:'Alex', ini:'AK', av:' av--alex', brokerage:'Dogwood Realty', miles:5, licensed:'3 years', license:'287310',
-           covers:12, onTime:12, cancels:1, yes:11, answered:12, coveredFor:'Nobody at Harbor Realty yet' },
+           covers:12, onTime:12, cancels:1, stars:[0,1,0,2,9], colleagues:[], coveredFor:'Nobody at Harbor Realty yet' },
   tom:   { id:'tom', name:'Tom Reyes', first:'Tom', ini:'TR', av:' av--tom', brokerage:'Queen City Homes', miles:3, licensed:'2 months', license:'318877',
-           covers:0, onTime:0, cancels:0, yes:0, answered:0, coveredFor:'Nobody yet' }
+           covers:0, onTime:0, cancels:0, stars:[0,0,0,0,0], colleagues:[], coveredFor:'Nobody yet' }
 };
 var ORDER = ['priya', 'alex', 'tom']; /* the order they raised a hand */
 
-function strip(a){
-  if (!a.covers) return '<p class="tc__new">No covers yet, so nothing to count. A card says New until 3 covers.</p>';
-  return '<dl class="tc__strip">' +
-    '<div><dt>covers</dt><dd>' + a.covers + '</dd></div>' +
-    '<div><dt>on time</dt><dd>' + a.onTime + ' of ' + a.covers + '</dd></div>' +
-    '<div><dt>cancelled</dt><dd>' + a.cancels + '</dd></div>' +
-    '<div><dt>said yes</dt><dd>' + a.yes + ' of ' + a.answered + '</dd></div>' +
-  '</dl>';
+var STAR = '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.2l2.1 4.26 4.7.68-3.4 3.32.8 4.68L8 11.93l-4.2 2.21.8-4.68-3.4-3.32 4.7-.68z" fill="currentColor"/></svg>';
+function rated(a){
+  var n = 0, sum = 0;
+  a.stars.forEach(function(c, i){ n += c; sum += c * (i + 1); });
+  return { n:n, avg: n ? Math.round(sum / n * 10) / 10 : 0 };
 }
-function dots(a){
-  var h = '<div class="dots" aria-hidden="true">';
-  for (var i = 0; i < a.answered; i++) h += '<i' + (i >= a.yes ? ' class="no"' : '') + '></i>';
+function plural(n, w){ return n + ' ' + w + (n === 1 ? '' : 's'); }
+/* five stars, filled up to v: each star is 14px wide with 2px between */
+function stars(v){
+  var five = STAR + STAR + STAR + STAR + STAR, whole = Math.floor(v);
+  var w = Math.min(78, whole * 16 + (v - whole) * 14);
+  return '<span class="stars" aria-hidden="true"><span class="stars__off">' + five + '</span><span class="stars__on" style="width:' + w.toFixed(1) + 'px">' + five + '</span></span>';
+}
+/* who they've covered for: the listing agent first, then colleagues by name, else nothing */
+function coveredLine(a){
+  if (a.you) return 'Covered for <b>you</b>';
+  if (a.colleagues && a.colleagues.length) return 'Covered for ' + a.colleagues.map(function(n){ return '<b>' + n + '</b>'; }).join(' and ') + ', your colleague' + (a.colleagues.length > 1 ? 's' : '');
+  return '';
+}
+/* The front of a trust card. No average until 3 ratings. */
+function summary(a){
+  var r = rated(a), c = coveredLine(a), h = '<div class="sum">';
+  if (r.n < 3) h += '<p class="sum__none">' + (r.n ? plural(r.n, 'rating') + ' so far. The average shows at 3.' : 'No ratings yet.') + '</p>';
+  else h += '<p class="sum__stars">' + stars(r.avg) + '<b>' + r.avg.toFixed(1) + '</b><span class="vh"> out of 5, </span><span class="sum__n">' + r.n + ' ratings</span></p>';
+  if (c) h += '<p class="sum__for">' + c + '</p>';
   return h + '</div>';
+}
+/* inside the card: how many listing agents gave each number of stars, never who */
+function breakdown(a){
+  var max = Math.max.apply(null, a.stars), said = [], h = '<div class="hist" aria-hidden="true">';
+  for (var n = 5; n >= 1; n--){
+    h += '<span>' + n + '</span><i><b style="width:' + (a.stars[n - 1] / max * 100) + '%"></b></i><span>' + a.stars[n - 1] + '</span>';
+    if (a.stars[n - 1]) said.push(a.stars[n - 1] + ' gave ' + plural(n, 'star'));
+  }
+  return h + '</div><p class="vh">' + said.join(', ') + '.</p>';
 }
 
 /* =====================================================
@@ -1141,12 +1179,12 @@ function s1render(){
     h += '<div class="a-body">' + brand +
       '<div class="seal seal--ok" style="margin-top:18px">' + ICON.checkLg + '</div>' +
       '<h3 class="a-h">You’re a verified agent</h3>' +
+      '<p class="a-sub">NC license ' + num + ' is active in today’s state record. We read it again every morning.</p>' +
       '<p class="a-sub">This is your trust card. A listing agent sees it when you raise a hand on their request.</p>' +
       '<div class="tc" style="margin-top:16px">' +
         '<div class="tc__head" style="cursor:default"><span class="av av--lg av--tom" aria-hidden="true">TR</span>' +
           '<span class="tc__who"><b>' + name + '</b><span>Queen City Homes</span></span><span class="tag tag--new">New</span></div>' +
-        '<p class="tc__lic">' + ICON.check + '<span><b>License active.</b> NC ' + num + ', checked against the state record today.</span></p>' +
-        '<p class="tc__new">No covers yet, so nothing to count. A card says New until 3 covers.</p>' +
+        '<p class="tc__new">No ratings yet. Your card says New until it has 3.</p>' +
       '</div>' +
       '<p class="a-help">A good place to start: requests from your Queen City Homes colleagues, who know you already.</p>' +
       '</div><div class="a-dock"><button type="button" class="a-btn a-btn--ghost" data-act="restart" data-k="main">Start over</button></div>';
@@ -1326,7 +1364,7 @@ s3render();
 /* =====================================================
    SCREEN 4  Pick from trust cards, then rate
    ===================================================== */
-var s4 = { phase:'pick', open:'priya', picked:null, list:false, answer:null, revealed:false };
+var s4 = { phase:'pick', open:'priya', picked:null, list:false, stars:0, answer:null, revealed:false };
 var s4el = $('#s4');
 
 var SIGNIN = [
@@ -1349,7 +1387,7 @@ function trustCard(a){
       var n = ORDER.filter(function(x){ return x !== s4.picked; }).indexOf(a.id) + 1;
       state = '<span class="tag tag--backup">Backup ' + n + '</span>';
     }
-  } else if (a.covers < 3) state = '<span class="tag tag--new">New</span>';
+  } else if (rated(a).n < 3) state = '<span class="tag tag--new">New</span>';
 
   var h = '<article class="tc' + (open ? ' is-open' : '') + (s4.picked === a.id ? ' is-picked' : '') + '">' +
     '<button type="button" class="tc__head" data-act="toggle" data-id="' + a.id + '" data-k="t-' + a.id + '" aria-expanded="' + open + '">' +
@@ -1357,20 +1395,21 @@ function trustCard(a){
       '<span class="tc__who"><b>' + a.name + '</b><span>' + a.brokerage + ', ' + a.miles + ' miles away</span></span>' +
       state + '<span class="tc__chev">' + ICON.chev + '</span>' +
     '</button>' +
-    '<p class="tc__lic">' + ICON.check + '<span><b>License active.</b> Checked against the state record today.</span></p>' +
-    strip(a);
+    summary(a);
 
   if (open){
+    var r = rated(a);
     h += '<div class="tc__more">' +
-      '<div class="tc__sec"><h4>License<span class="src">from the state record</span></h4>' +
-        'NC license ' + a.license + '. Licensed ' + a.licensed + '. Photo ID matched at sign-up.</div>' +
       '<div class="tc__sec"><h4>Track record<span class="src">counted by Porch Partner</span></h4>' +
-        (a.covers ? a.covers + ' covers, ' + a.onTime + ' checked in on time, ' + a.cancels + (a.cancels === 1 ? ' cancellation' : ' cancellations') + ' of ' + a.first + '’s own.' : 'Nothing yet.') +
-        ' On time means checked in at least 15 minutes before the start.</div>' +
-      '<div class="tc__sec"><h4>Rating question<span class="src">answered by listing agents</span></h4>' +
-        '<p class="tc__q">“Would you hand them your listing again?”</p>' +
-        (a.answered ? dots(a) + a.yes + ' of ' + a.answered + ' said yes.' : '<p style="margin-top:4px">No answers yet.</p>') + '</div>' +
+        (a.covers ? a.covers + ' covers, ' + a.onTime + ' checked in on time, ' +
+          (a.cancels ? '<span class="warn">' + plural(a.cancels, 'late cancellation') + '</span>' : 'no late cancellations') + '.' : 'Nothing yet.') +
+        ' On time means checked in at least 15 minutes before the start. A cancellation counts only inside 24 hours of it.</div>' +
+      '<div class="tc__sec"><h4>Ratings<span class="src">given by listing agents</span></h4>' +
+        (r.n >= 3 ? breakdown(a) + r.avg.toFixed(1) + ' from ' + r.n + ' ratings. It shows how many gave each, never who.'
+                  : (r.n ? plural(r.n, 'rating') + ' so far.' : 'None yet.') + ' The average shows at 3 ratings.') + '</div>' +
       '<div class="tc__sec"><h4>Covered for</h4>' + a.coveredFor + '</div>' +
+      '<div class="tc__sec"><h4>License<span class="src">from the state record</span></h4>' +
+        'NC license ' + a.license + ', active in today’s record. Licensed ' + a.licensed + '. Photo ID matched at sign-up.</div>' +
       (s4.picked === a.id ? '' :
         '<button type="button" class="a-btn" data-act="pick" data-id="' + a.id + '" data-k="p-' + a.id + '">' + (s4.picked ? 'Pick ' + a.first + ' instead' : 'Pick ' + a.first) + '</button>') +
       '</div>';
@@ -1389,6 +1428,7 @@ function s4render(){
     } else {
       h += '<p class="a-count" style="padding-top:2px">Pick one. The others can stay as backups.</p>';
     }
+    h += '<p class="a-lic">' + ICON.check + '<span><b>All 3 licenses are active.</b> Checked against the state record today.</span></p>';
     h += ORDER.map(function(id){ return trustCard(AGENTS[id]); }).join('');
     if (s4.picked){
       h += '<div class="a-card note"><h4>Your handoff note for ' + p.first + '</h4>' +
@@ -1398,7 +1438,6 @@ function s4render(){
     h += '</div>';
   } else {
     p = AGENTS[s4.picked || 'priya'];
-    var covers = p.covers + 1, yes = p.yes + (s4.answer === 'yes' ? 1 : 0), ans = p.answered + 1;
     h = status('3:10') + '<div class="a-head"><h3>214 Elm St</h3><p>Sat, Nov 21. The open house is over.</p></div><div class="a-body">';
 
     h += '<div class="a-card"><ul class="tl">' +
@@ -1421,21 +1460,27 @@ function s4render(){
 
     h += '<div class="a-card rate">';
     if (!s4.answer){
-      h += '<h4>One question about ' + p.first + '</h4>' +
-        '<p class="rate__q">Would you hand ' + p.first + ' your listing again?</p>' +
-        '<div class="rate__btns"><button type="button" class="a-btn" data-act="yes" data-k="yes">Yes</button>' +
-        '<button type="button" class="a-btn a-btn--ghost" data-act="no" data-k="no">No</button></div>' +
-        '<p>' + p.first + ' is answering one about you. Neither of you sees the other’s answer until both are in.</p>';
+      h += '<h4>Rate ' + p.first + '</h4>' +
+        '<p class="rate__q">How did ' + p.first + ' do at 214 Elm St?</p>' +
+        '<div class="rate__stars" role="group" aria-label="Stars for ' + p.first + '">' +
+        [1, 2, 3, 4, 5].map(function(n){
+          return '<button type="button" class="rstar' + (s4.stars >= n ? ' is-on' : '') + '" data-act="star" data-id="' + n + '" data-k="star-' + n + '" aria-label="' + plural(n, 'star') + '" aria-pressed="' + (s4.stars === n) + '">' + STAR + '</button>';
+        }).join('') + '</div>' +
+        (s4.stars ? '<button type="button" class="a-btn" style="margin:0" data-act="rate" data-k="rate">Send ' + plural(s4.stars, 'star') + '</button>' : '') +
+        '<p>' + p.first + ' is rating you too. Neither of you sees the other’s rating until both are in.</p>';
     } else if (!s4.revealed){
-      h += '<h4>Your answer is in</h4>' +
-        '<p class="rate__q">' + (s4.answer === 'yes' ? 'Yes' : 'No') + ', sealed until ' + p.first + ' answers</p>' +
-        '<p style="margin-top:0">You’ll both see both answers at the same moment. If ' + p.first + ' hasn’t answered in 7 days, yours shows alone.</p>' +
-        '<button type="button" class="a-link" data-act="undo" data-k="undo">Change my answer</button>';
+      h += '<h4>Your rating is in</h4>' +
+        '<p class="rate__q rate__sent">' + stars(s4.answer) + '<span class="vh">' + plural(s4.answer, 'star') + ', </span><span>sealed until ' + p.first + ' rates you</span></p>' +
+        '<p style="margin-top:0">You’ll both see both ratings at the same moment. If ' + p.first + ' hasn’t rated you in 7 days, yours shows alone.</p>' +
+        '<button type="button" class="a-link" data-act="undo" data-k="undo">Change my rating</button>';
     } else {
-      h += '<h4>Both answers are in</h4><div class="ans">' +
-        '<div><span class="av av--dana" aria-hidden="true">DR</span><span><b>You: ' + (s4.answer === 'yes' ? 'Yes' : 'No') + '.</b> ' + (s4.answer === 'yes' ? 'You’d hand ' + p.first + ' your listing again.' : 'You wouldn’t hand ' + p.first + ' your listing again.') + '</span></div>' +
-        '<div><span class="av' + p.av + '" aria-hidden="true">' + p.ini + '</span><span><b>' + p.first + ': Yes.</b> ' + p.first + ' would cover for you again.</span></div>' +
-        '</div><p>' + p.first + '’s trust card now reads ' + covers + (covers === 1 ? ' cover, ' : ' covers, ') + (p.onTime + 1) + ' of ' + covers + ' on time, ' + yes + ' of ' + ans + ' said yes. It shows the count, never who said what.</p>';
+      var now = p.stars.slice();
+      now[s4.answer - 1]++;
+      h += '<h4>Both ratings are in</h4><div class="ans">' +
+        '<div><span class="av av--dana" aria-hidden="true">DR</span><span><b>You gave ' + p.first + ' ' + plural(s4.answer, 'star') + '.</b></span></div>' +
+        '<div><span class="av' + p.av + '" aria-hidden="true">' + p.ini + '</span><span><b>' + p.first + ' gave you 5 stars.</b></span></div>' +
+        '</div><p>' + p.first + '’s trust card as you see it now. It shows the average, never who gave what.</p>' +
+        '<div class="rate__card">' + summary({ stars:now, you:true }) + '</div>';
     }
     h += '</div></div>';
   }
@@ -1446,7 +1491,7 @@ function s4render(){
   var waiting = s4.phase === 'after' && s4.answer && !s4.revealed;
   var who = AGENTS[s4.picked || 'priya'].first;
   $('#s4-other').hidden = !waiting;
-  $('#s4-other').textContent = 'Now ' + who + ' answers too';
+  $('#s4-other').textContent = 'Now ' + who + ' rates too';
   var say = $('#s4-say');
   say.hidden = !(s4.phase === 'after' && !s4.picked);
   say.textContent = 'Nobody was picked yet, so I picked Priya for Dana.';
@@ -1457,13 +1502,14 @@ on(s4el, 'click', '[data-act]', function(t){
   if (a === 'toggle') s4.open = s4.open === id ? null : id;
   if (a === 'pick'){ s4.picked = id; s4.open = null; s4el._keep = false; }
   if (a === 'list') s4.list = !s4.list;
-  if (a === 'yes' || a === 'no') s4.answer = a;
+  if (a === 'star') s4.stars = +id;
+  if (a === 'rate') s4.answer = s4.stars;
   if (a === 'undo') s4.answer = null;
   s4render();
 });
 on(document, 'click', '[data-phase]', function(t){ s4.phase = t.getAttribute('data-phase'); s4render(); });
 $('#s4-other').addEventListener('click', function(){ s4.revealed = true; s4render(); });
-$('#s4-reset').addEventListener('click', function(){ s4 = { phase:'pick', open:'priya', picked:null, list:false, answer:null, revealed:false }; s4render(); });
+$('#s4-reset').addEventListener('click', function(){ s4 = { phase:'pick', open:'priya', picked:null, list:false, stars:0, answer:null, revealed:false }; s4render(); });
 s4render();
 
 /* =====================================================
@@ -1477,11 +1523,11 @@ var S5 = {
   cancel:  { when:'Fri, Nov 20, 6:40 PM', clock:'6:40', does:[
     'Tells Dana at once, with the reason if Priya gave one.',
     'Offers the cover to Alex, the first backup. If Alex hasn’t said yes within an hour, Tom is offered it and Dana is told.',
-    'Adds a cancellation to Priya’s track record. The cancellations on a trust card are always the covering agent’s own.'] },
+    'Counts it as a late cancellation on Priya’s track record, because it came inside 24 hours. Before Friday 1 PM it wouldn’t have counted.'] },
   noshow:  { when:'Sat, Nov 21, 12:45 PM', clock:'12:45', does:[
     'At 12:45 PM, 15 minutes before the start, alerts Dana and the first backup together.',
     'Leaves the choice with Dana: call Priya, send Alex, go, or call it off.',
-    'Counts it as a cancellation on Priya’s trust card if someone else has to cover. If Priya arrives after 12:45 and hosts, the cover counts, but not as on time.'] },
+    'Counts it as a late cancellation on Priya’s track record if someone else has to cover. If Priya arrives after 12:45 and hosts, the cover counts, but not as on time.'] },
   license: { when:'Fri, Nov 20, 9:00 AM', clock:'9:00', does:[
     'Reads every agent’s license from the state record each morning.',
     'Takes the request away from an agent whose license isn’t active, and tells them why.',
@@ -1495,7 +1541,7 @@ function alexCard(waitLine){
   var a = AGENTS.alex;
   return '<div class="a-card"><p class="a-label">Offered to your first backup</p>' +
     '<div class="mini"><span class="av av--lg av--alex" aria-hidden="true">AK</span><div><b>Alex Kim</b><span>Dogwood Realty, 5 miles away</span></div></div>' +
-    strip(a) +
+    summary(a) +
     '<p class="wait"><i></i><span>' + waitLine + '</span></p></div>';
 }
 var WHO = {
@@ -1532,7 +1578,7 @@ function s5render(){
         '<li>' + ICON.check + '<span>Alex has your handoff note. The lockbox code shows when Alex checks in.</span></li>' +
         '<li>' + ICON.check + '<span>Tom Reyes is now your first backup.</span></li>' +
         (s5.what === 'cancel'
-          ? '<li class="dot"><span>Priya’s trust card now shows 1 cancellation.</span></li>'
+          ? '<li class="dot"><span>Priya’s track record now shows 1 late cancellation.</span></li>'
           : '<li class="dot"><span>Priya can raise a hand again once the state record shows an active license.</span></li>') +
         '</ul></div></div>' + lineup('Who covers 214 Elm St', [['alex', 'tag--ok', 'Covering'], ['tom', 'tag--backup', 'Backup 1']]);
     }
@@ -1555,14 +1601,14 @@ function s5render(){
         '<li>' + ICON.check + '<span>Alex has your handoff note. The lockbox code shows when Alex checks in.</span></li>' +
         '<li>' + ICON.check + '<span>The offer moves with the cover: Alex keeps the buyer leads.</span></li>' +
         '<li>' + ICON.check + '<span>Priya has been told the cover went to Alex.</span></li>' +
-        '<li class="dot"><span>It counts as a cancellation on Priya’s trust card.</span></li>' +
+        '<li class="dot"><span>It counts as a late cancellation on Priya’s track record.</span></li>' +
         '</ul></div>';
     } else if (s5.choice === 'self'){
       h += '<div class="a-alert a-alert--good"><span class="a-alert__when">12:46 PM</span><h4>You’re covering 214 Elm St</h4>Leave now and you’re there by about 1:10 PM.</div>' +
         '<div class="a-card"><ul class="ticks">' +
         '<li>' + ICON.check + '<span>Priya and Alex have been told they’re not needed.</span></li>' +
         '<li>' + ICON.check + '<span>The sign-in list is open on your phone, and every visitor is yours.</span></li>' +
-        '<li class="dot"><span>It counts as a cancellation on Priya’s trust card.</span></li>' +
+        '<li class="dot"><span>It counts as a late cancellation on Priya’s track record.</span></li>' +
         '</ul></div>';
     } else {
       h += '<div class="a-alert a-alert--heads"><span class="a-alert__when">12:46 PM</span><h4>Open house called off</h4>Priya and Alex have been told.</div>' +
@@ -1570,7 +1616,7 @@ function s5render(){
         '<li class="dot"><span>Tell your seller.</span></li>' +
         '<li class="dot"><span>Take today’s open house off the listing. Porch Partner can’t do that for you.</span></li>' +
         '</ul></div>' +
-        '<div class="a-card"><ul class="ticks"><li class="dot"><span>It counts as a cancellation on Priya’s trust card.</span></li></ul></div>';
+        '<div class="a-card"><ul class="ticks"><li class="dot"><span>It counts as a late cancellation on Priya’s track record.</span></li></ul></div>';
     }
     h += '</div>';
     if (!s5.choice) h += lineup('Who covers 214 Elm St', [['priya', 'tag--bad', 'No check-in'], ['alex', 'tag--wait', 'Alerted, 12 min away'], ['tom', 'tag--backup', 'Backup 2']]);
@@ -1584,8 +1630,7 @@ function s5render(){
     if (s5.hand){
       h += '<div class="a-alert a-alert--good"><span class="a-alert__when">9:44 AM</span><h4>Priya Shah raised a hand</h4>40 minutes after you added the fee.</div>' +
         '<div class="a-card"><div class="mini"><span class="av av--lg" aria-hidden="true">PS</span><div><b>Priya Shah</b><span>Queen City Homes, 4 miles away</span></div></div>' +
-        '<p class="tc__lic" style="margin:10px 0 0">' + ICON.check + '<span><b>License active.</b> Checked against the state record today.</span></p>' +
-        strip(AGENTS.priya) + '</div>' +
+        summary(AGENTS.priya) + '</div>' +
         '<div class="a-card"><p class="a-label">The request now</p><div class="req__offer" style="margin-top:0">' + offerChips(true, s5.fee, 'Dana') + '</div>' +
         '<p class="a-help">Pick Priya, or wait to see who else raises a hand.</p></div>';
     } else if (s5.feeAdded){
@@ -1685,10 +1730,10 @@ var A = [
   ['2.9','p','The fee and who keeps the leads should be agreed in writing before the open house, which is why the offer sits on the request.','One industry guide. ' + L.hs,'The offer could be settled in chat afterwards, and the request screen gets simpler.'],
   ['3.1','p','The state commission publishes a searchable record of licensed agents.','For North Carolina: anyone can search by license number or name, with no login. ' + L.ncs,'The license check falls back to an uploaded license or a broker’s confirmation.'],
   ['3.2','p','That record shows status and brokerage, and software may re-read it every day.','For North Carolina: the Commission sells its licensee data as files updated daily, $250 a year. I haven’t read the file layout. ' + L.nco,'Re-checks turn manual or rarer, and “checked today” goes.'],
-  ['3.3','t','Star averages inflate until they stop telling people apart.','Shown for one online labor marketplace, from a search summary. Unproved for agents. ' + L.inf,'Stars would do, and are more familiar.'],
-  ['3.4','u','One yes-or-no question inflates less than stars and still tells people apart.','My reasoning.','Add a second question, or tags.'],
-  ['3.5','u','Showing both answers together stops tit-for-tat answers.','My reasoning. Other marketplaces are said to do this; I haven’t checked.','Answers could show at once.'],
-  ['3.6','u','Listing agents trust facts the service checks or measures more than other people’s opinions.','No agent interviews.','Lead the card with ratings instead.'],
+  ['3.3','t','Star averages inflate until they stop telling people apart.','Shown for one online labor marketplace, from a search summary. Unproved for agents. ' + L.inf,'The stars alone would do, and the count and the track record matter less.'],
+  ['3.4','u','The number of ratings and the late cancellations inside the card keep a star average useful, even if averages creep up.','My reasoning.','Ask one sharper question beside the stars, such as whether they’d hand over their listing again.'],
+  ['3.5','u','Showing both ratings together stops tit-for-tat ratings.','My reasoning. Other marketplaces are said to do this; I haven’t checked.','Ratings could show at once.'],
+  ['3.6','u','At a glance a listing agent wants other agents’ ratings and a link to someone they know. The counted facts can wait until the card is open.','My judgment. No agent interviews.','Lead the card with the track record instead.'],
   ['3.7','u','Covering agents are fine with checking in by location at the house.','A guess.','“On time” must come from the listing agent’s say-so.'],
   ['3.8','p','A license number alone doesn’t prove who is signing up, so identity needs its own check.','License numbers are public in North Carolina: the Commission’s search takes one and its licensee list prints them. ' + L.nco,'Sign-up is one step shorter.'],
   ['3.9','u','New agents can build a record inside their own brokerage first.','Follows from decision 1.','New agents need another way in, such as a broker vouching for them.'],
